@@ -10,7 +10,7 @@ Cours centré sur les notebooks Java et Git, utilisant le workflow de rendu Quar
 |--------|--------|-------------|
 | `01-notebook-git` | `ebpro/notebook-git` | Notebooks Git (bases, workflows) |
 | `02-notebook-java-jpa` | `ebpro/notebook-java-jpa` | Persistance Java avec JPA |
-| `03-notebook-java-restfullws` | `ebpro/notebook-java-restfullws` | API REST avec JAX-RS |
+| `03-notebook-java-restfullws` | `ebpro/notebook-java-restfulws` | API REST avec JAX-RS |
 | `_quarto-utils` | `ebpro/_quarto-utils` @ v1.1.9 | Utilitaires Quarto partagés |
 
 ## CI
@@ -22,6 +22,3 @@ Le workflow `.github/workflows/ci-render.yml` appelle le workflow réutilisable
 - `utils-ref: 'v1.1.9'`
 - `deploy: true`
 - `nested-dind: true`
-
-> **Note:** `03-notebook-java-restfullws` pending — `ebpro/notebook-java-restfullws`
-> currently returns git-protocol 404 (API visible). Will be added once access is restored.
