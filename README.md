@@ -22,3 +22,6 @@ Le workflow `.github/workflows/ci-render.yml` appelle le workflow réutilisable
 - `utils-ref: 'v1.1.9'`
 - `deploy: true`
 - `nested-dind: true`
+
+> **Note:** `03-notebook-java-restfullws` pending — `ebpro/notebook-java-restfullws`
+> currently returns git-protocol 404 (API visible). Will be added once access is restored.
