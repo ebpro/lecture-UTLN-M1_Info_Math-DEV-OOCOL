@@ -1,0 +1,9 @@
+[submodule "_quarto-utils"]
+	path = _quarto-utils
+	url = git@github.com:ebpro/_quarto-utils.git
+[submodule "01-notebook-git"]
+	path = 01-notebook-git
+	url = git@github.com:ebpro/notebook-git.git
+[submodule "02-notebook-java-jpa"]
+	path = 02-notebook-java-jpa
+	url = git@github.com:ebpro/notebook-java-jpa.git

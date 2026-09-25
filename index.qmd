@@ -1,0 +1,36 @@
+---
+title: "Master 1 Informatique et Mathématiques : Développement OOCOL"
+subtitle: "Java et Git"
+description: |
+  Ce cours couvre les concepts fondamentaux du développement en Java et de la gestion de version avec Git.
+
+  - Git
+    - Bases de Git
+    - Workflows de développement
+  - Persistance des données avec JPA (Java Persistence API)
+    - Introduction à JPA
+    - Mappage des entités Java aux tables de la base de données
+    - Opérations CRUD avec JPA
+    - Gestion des relations entre entités
+  - Création d'API REST avec JAX-RS
+    - Introduction à l'approche RESTful
+      - Gestion des requêtes HTTP et des réponses
+    - Création d'API RESTful
+
+format:
+  html:
+    css:
+      - _quarto-utils/gallery-custom.css
+
+metadata-files:
+  - _quarto-utils/index-listing.yml
+
+listing:
+  id: gallery-listing
+  max-description-length: 200
+
+jupyter: java
+---
+
+<div id="gallery-listing">
+</div>

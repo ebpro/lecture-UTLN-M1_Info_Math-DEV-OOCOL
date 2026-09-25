@@ -1,0 +1,20 @@
+name: Render Quarto (calls shared workflow)
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  call-shared-render:
+    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.1.9
+    secrets: inherit
+    with:
+      profiles: 'notes,slides'
+      quarto-image: 'harbor.ebruno.fr/ghcr-p2c/ebpro/jupyter-base:quarto-full-fix-chromium-ci-headless-render'
+      utils-repo: 'ebpro/_quarto-utils'
+      utils-ref: 'v1.1.9'
+      output-path: '_output'
+      deploy: true
+      nested-dind: true
