@@ -10,7 +10,7 @@ Cours centré sur les notebooks Java et Git, utilisant le workflow de rendu Quar
 |--------|--------|-------------|
 | `01-notebook-git` | `ebpro/notebook-git` | Notebooks Git (bases, workflows) |
 | `02-notebook-java-jpa` | `ebpro/notebook-java-jpa` | Persistance Java avec JPA |
-| `03-notebook-java-restfullws` | `ebpro/notebook-java-restfullws` | API REST avec JAX-RS |
+| `03-notebook-java-restfullws` | `ebpro/notebook-java-restfulws` | API REST avec JAX-RS |
 | `_quarto-utils` | `ebpro/_quarto-utils` @ v1.1.9 | Utilitaires Quarto partagés |
 
 ## CI

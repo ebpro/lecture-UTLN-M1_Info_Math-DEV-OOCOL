@@ -7,3 +7,6 @@
 [submodule "02-notebook-java-jpa"]
 	path = 02-notebook-java-jpa
 	url = git@github.com:ebpro/notebook-java-jpa.git
+[submodule "03-notebook-java-restfullws"]
+	path = 03-notebook-java-restfullws
+	url = https://github.com/ebpro/notebook-java-restfulws.git
