@@ -1,22 +1,18 @@
-name: Render Quarto (calls shared workflow)
-
+name: CI Render
 on:
   push:
-    branches: [ main, develop ]
+    branches: [develop]
   pull_request:
-    branches: [ main, develop ]
-
+    branches: [develop]
 jobs:
-  call-shared-render:
+  render:
     uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.7
     secrets: inherit
     with:
-      profiles: 'notes,slides'
-      quarto-image: 'harbor.ebruno.fr/ghcr-p2c/ebpro/jupyter-base:quarto-full-fix-chromium-ci-headless-render'
-      utils-repo: 'ebpro/_quarto-utils'
-      utils-ref: 'v1.3.7'
-      enable-docker: true
-      output-path: '_output'
+      utils-ref: develop
+      quarto-image: "ghcr.io/ebpro/jupyter-base:quarto-full-fix-chromium-ci-headless-render"
+      profiles: "notes,slides"
       deploy-pages: true
       deploy-cloudflare: true
-      cf-project-name: 'lecture-utln-m1-info-math-dev-oocol'
+      cf-project-name: "lecture-utln-m1-info-math-dev-oocol"
+      enable-docker: true

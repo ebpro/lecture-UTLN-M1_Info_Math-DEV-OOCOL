@@ -1,12 +1,19 @@
 [submodule "_quarto-utils"]
 	path = _quarto-utils
 	url = git@github.com:ebpro/_quarto-utils.git
-[submodule "01-notebook-git"]
-	path = 01-notebook-git
+[submodule "01-notebook-java-java101"]
+	path = 01-notebook-java-java101
+	url = git@github.com:ebpro/notebook-java-java101.git
+	branch = develop
+[submodule "02-notebook-git"]
+	path = 02-notebook-git
 	url = git@github.com:ebpro/notebook-git.git
-[submodule "02-notebook-java-jpa"]
-	path = 02-notebook-java-jpa
-	url = git@github.com:ebpro/notebook-java-jpa.git
-[submodule "03-notebook-java-restfullws"]
-	path = 03-notebook-java-restfullws
-	url = https://github.com/ebpro/notebook-java-restfulws.git
+	branch = develop
+[submodule "03-notebook-java-after8"]
+	path = 03-notebook-java-after8
+	url = git@github.com:ebpro/notebook-java-after8.git
+	branch = develop
+[submodule "04-notebook-java-jdbc"]
+	path = 04-notebook-java-jdbc
+	url = git@github.com:ebpro/notebook-java-jdbc.git
+	branch = develop
