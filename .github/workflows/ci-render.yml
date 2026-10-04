@@ -8,13 +8,13 @@ on:
 
 jobs:
   call-shared-render:
-    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.6
+    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.7
     secrets: inherit
     with:
       profiles: 'notes,slides'
       quarto-image: 'harbor.ebruno.fr/ghcr-p2c/ebpro/jupyter-base:quarto-full-fix-chromium-ci-headless-render'
       utils-repo: 'ebpro/_quarto-utils'
-      utils-ref: 'v1.3.6'
+      utils-ref: 'v1.3.7'
       enable-docker: true
       output-path: '_output'
       deploy-pages: true
