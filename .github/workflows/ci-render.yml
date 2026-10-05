@@ -6,7 +6,7 @@ on:
     branches: [develop]
 jobs:
   render:
-    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.7
+    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.8
     secrets: inherit
     with:
       utils-ref: develop
