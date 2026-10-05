@@ -1,15 +1,6 @@
-# OOCOL — M1 Info & Math : DEV OO Collab
-# Edit this file to change the pedagogical card order
+# Pedagogical card order — controlled by NN- prefix on submodule directories.
+# Sort is by filename (full relative path), so 01-... < 02-... < ... < 14-...
 listing:
   id: gallery-listing
   max-description-length: 200
   sort: filename
-  sections:
-    - title: "Java de base (101)"
-      contents: "01-notebook-java-java101"
-    - title: "Git"
-      contents: "02-notebook-git"
-    - title: "Après Java 8"
-      contents: "03-notebook-java-after8"
-    - title: "JDBC"
-      contents: "04-notebook-java-jdbc"
