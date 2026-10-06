@@ -1,18 +1,27 @@
 ---
-title: "M1 Info & Math — DEV OO Collab"
-subtitle: "Java, Git, Après Java 8, JDBC"
+title: "M1 Info & Math — DEV OO Collaboratif"
 description: |
   Cours de développement orienté objet collaboratif : fondamentaux Java,
-  gestion de version Git, évolutions Java post-8, et accès aux bases de données JDBC.
+  gestion de version Git, évolutions Java post-8, et accès aux bases
+  de données JDBC.
 format:
   html:
     css:
       - _quarto-utils/gallery-custom.css
 metadata-files:
-  - _quarto-utils/index-listing.yml
   - course-order.yml
 jupyter: java
 ---
 
-<div id="gallery-listing">
-</div>
+<div id="sec-01"></div>
+<div id="sec-02"></div>
+<div id="sec-03"></div>
+<div id="sec-04"></div>
+<div id="sec-05"></div>
+<div id="sec-06"></div>
+<div id="sec-07"></div>
+<div id="sec-08"></div>
+<div id="sec-09"></div>
+<div id="sec-10"></div>
+<div id="sec-11"></div>
+<div id="sec-12"></div>

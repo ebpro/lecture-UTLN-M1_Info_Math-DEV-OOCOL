@@ -1,19 +1,51 @@
 [submodule "_quarto-utils"]
 	path = _quarto-utils
 	url = git@github.com:ebpro/_quarto-utils.git
-[submodule "01-notebook-java-java101"]
-	path = 01-notebook-java-java101
-	url = git@github.com:ebpro/notebook-java-java101.git
-	branch = develop
 [submodule "02-notebook-git"]
-	path = 02-notebook-git
+	path = 10-notebook-git
 	url = git@github.com:ebpro/notebook-git.git
 	branch = develop
 [submodule "03-notebook-java-after8"]
-	path = 03-notebook-java-after8
+	path = 11-notebook-java-after8
 	url = git@github.com:ebpro/notebook-java-after8.git
 	branch = develop
 [submodule "04-notebook-java-jdbc"]
-	path = 04-notebook-java-jdbc
+	path = 12-notebook-java-jdbc
 	url = git@github.com:ebpro/notebook-java-jdbc.git
+	branch = develop
+[submodule "01-notebook-java-introduction"]
+	path = 01-notebook-java-introduction
+	url = git@github.com:ebpro/notebook-java-introduction.git
+	branch = develop
+[submodule "02-notebook-java-install"]
+	path = 02-notebook-java-install
+	url = git@github.com:ebpro/notebook-java-install.git
+	branch = develop
+[submodule "03-notebook-java-maven"]
+	path = 03-notebook-java-maven
+	url = git@github.com:ebpro/notebook-java-maven.git
+	branch = develop
+[submodule "04-notebook-java-bases"]
+	path = 04-notebook-java-bases
+	url = git@github.com:ebpro/notebook-java-bases.git
+	branch = develop
+[submodule "05-notebook-java-heritage"]
+	path = 05-notebook-java-heritage
+	url = git@github.com:ebpro/notebook-java-heritage.git
+	branch = develop
+[submodule "06-notebook-java-collections"]
+	path = 06-notebook-java-collections
+	url = git@github.com:ebpro/notebook-java-collections.git
+	branch = develop
+[submodule "07-notebook-java-exceptions"]
+	path = 07-notebook-java-exceptions
+	url = git@github.com:ebpro/notebook-java-exceptions.git
+	branch = develop
+[submodule "08-notebook-java-io"]
+	path = 08-notebook-java-io
+	url = git@github.com:ebpro/notebook-java-io.git
+	branch = develop
+[submodule "09-notebook-java-serialisation"]
+	path = 09-notebook-java-serialisation
+	url = git@github.com:ebpro/notebook-java-serialisation.git
 	branch = develop
