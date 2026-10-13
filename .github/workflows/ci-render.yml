@@ -4,12 +4,17 @@ on:
     branches: [develop]
   pull_request:
     branches: [develop]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   render:
-    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.9
+    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.19
     secrets: inherit
     with:
-      utils-ref: develop
+      utils-ref: v1.3.19
+      deploy-static: ${{ github.event_name != 'pull_request' }}
       quarto-image: "ghcr.io/ebpro/jupyter-base:quarto-full-fix-chromium-ci-headless-render"
       profiles: "notes,slides"
       deploy-pages: true
