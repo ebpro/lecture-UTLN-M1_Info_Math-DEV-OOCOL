@@ -1,63 +1,52 @@
+# Section titles live in index.qmd headings (Quarto 1.10 listing schema has no title property)
 # OOCOL — M1 Info & Math: DEV OO Collaboratif
 # 12 sections in pedagogical order
 listing:
   - id: sec-01
-    title: "Java — Introduction"
     contents: "01-notebook-java-introduction/*.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-02
-    title: "Java — Installation & Compilation"
     contents: "02-notebook-java-install/*.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-03
-    title: "Java — Maven"
     contents: "03-notebook-java-maven/*.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-04
-    title: "Java — Bases"
     contents: "04-notebook-java-bases/*.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-05
-    title: "Java — Héritage"
     contents: "05-notebook-java-heritage/*.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-06
-    title: "Java — Collections"
     contents: "06-notebook-java-collections/*.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-07
-    title: "Java — Exceptions"
     contents: "07-notebook-java-exceptions/*.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-08
-    title: "Java — Entrée/Sortie"
     contents: "08-notebook-java-io/*.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-09
-    title: "Java — Sérialisation"
     contents: "09-notebook-java-serialisation/*.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-10
-    title: "Git"
     contents: "10-notebook-git/*.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-11
-    title: "Après Java 8"
     contents: "11-notebook-java-after8/*.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-12
-    title: "JDBC"
     contents: "12-notebook-java-jdbc/*.qmd"
     sort: filename
     max-description-length: 200
