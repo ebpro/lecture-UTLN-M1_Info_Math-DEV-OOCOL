@@ -2,6 +2,10 @@ name: CI Render
 on:
   push:
     branches: [develop]
+    tags: ['v*']
+  # v1.3.22: preview deploys + auto-cleanup
+  delete:
+    branches: ['**']
   pull_request:
     branches: [develop]
 concurrency:
@@ -10,10 +14,10 @@ concurrency:
 
 jobs:
   render:
-    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.19
+    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.24
     secrets: inherit
     with:
-      utils-ref: v1.3.19
+      utils-ref: v1.3.24
       deploy-static: ${{ github.event_name != 'pull_request' }}
       quarto-image: "ghcr.io/ebpro/jupyter-base:quarto-full-fix-chromium-ci-headless-render"
       profiles: "notes,slides"
