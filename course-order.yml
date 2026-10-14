@@ -50,3 +50,7 @@ listing:
     contents: "12-notebook-java-jdbc/*.qmd"
     sort: filename
     max-description-length: 200
+  - id: sec-13
+    contents: "13-notebook-revision-java/*.qmd"
+    sort: filename
+    max-description-length: 200

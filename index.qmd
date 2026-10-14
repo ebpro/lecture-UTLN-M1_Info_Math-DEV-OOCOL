@@ -61,3 +61,7 @@ jupyter: java
 ## JDBC
 
 <div id="sec-12"></div>
+
+## Révision — Mise à niveau Java & Git
+
+<div id="sec-13"></div>
