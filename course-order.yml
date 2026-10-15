@@ -1,52 +1,271 @@
 # Section titles live in index.qmd headings (Quarto 1.10 listing schema has no title property)
 # OOCOL — M1 Info & Math: DEV OO Collaboratif
-# 12 sections in pedagogical order
+# v2026 arc: explicit ordered file lists (no globs, no sort — list order IS the pedagogical order)
+# 13 sections; sec-NN ids stay tied to their ELO directory; arc ordering is realized by section
+# order in index.qmd and entry order within each section's contents list.
+# Card keys mirrored from _quarto-utils/index-listing.yml (except `sort`, deliberately: the
+# explicit contents order above IS the pedagogical order and must not be re-sorted).
+# Root-index listings reference LESSON files only: the module index.qmd pages are deduplicated
+# out of the root listing (they remain reachable via the sidebar / their own gallery pages).
 listing:
+  # 1) Origins + first contact with Java
   - id: sec-01
-    contents: "01-notebook-java-introduction/*.qmd"
-    sort: filename
+    contents:
+      - 01-notebook-java-introduction/00_java_L_origines.qmd
+      - 01-notebook-java-introduction/01_java_101_L_Introduction.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
     max-description-length: 200
+  # 2) Installation + compilation mechanics (TP)
   - id: sec-02
-    contents: "02-notebook-java-install/*.qmd"
-    sort: filename
+    contents:
+      - 02-notebook-java-install/02_java_P_mecanique.qmd
+      - 02-notebook-java-install/02_java_101_InstallationCompilation.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
     max-description-length: 200
-  - id: sec-03
-    contents: "03-notebook-java-maven/*.qmd"
-    sort: filename
-    max-description-length: 200
-  - id: sec-04
-    contents: "04-notebook-java-bases/*.qmd"
-    sort: filename
-    max-description-length: 200
-  - id: sec-05
-    contents: "05-notebook-java-heritage/*.qmd"
-    sort: filename
-    max-description-length: 200
-  - id: sec-06
-    contents: "06-notebook-java-collections/*.qmd"
-    sort: filename
-    max-description-length: 200
-  - id: sec-07
-    contents: "07-notebook-java-exceptions/*.qmd"
-    sort: filename
-    max-description-length: 200
-  - id: sec-08
-    contents: "08-notebook-java-io/*.qmd"
-    sort: filename
-    max-description-length: 200
-  - id: sec-09
-    contents: "09-notebook-java-serialisation/*.qmd"
-    sort: filename
-    max-description-length: 200
+  # 3) Git from day one (the Git lecture; java-side bases stub 03_java_L_git_bases.qmd is
+  # re-added to this listing in wave B once written)
   - id: sec-10
-    contents: "10-notebook-git/*.qmd"
-    sort: filename
+    contents:
+      - 10-notebook-git/01_git_L_Bases.qmd
+      - 10-notebook-git/02_git_L_Workflows.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
     max-description-length: 200
-  - id: sec-11
-    contents: "11-notebook-java-after8/*.qmd"
-    sort: filename
+  # 4) Maven
+  - id: sec-03
+    contents:
+      - 03-notebook-java-maven/03_java_101_Maven_Introduction.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
     max-description-length: 200
+  # 5) Language bases
+  - id: sec-04
+    contents:
+      - 04-notebook-java-bases/04_java_101_L_Bases.qmd
+      - 04-notebook-java-bases/04_java_101_P_Bases.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
+    max-description-length: 200
+  # 6) Reuse + inheritance (new v2026 arc 05/06 + TP; legacy 05_java_101_L_Heritage.qmd is
+  # excluded from this listing — the file stays in the ELO and wave B replaces it)
+  - id: sec-05
+    contents:
+      - 05-notebook-java-heritage/05_java_L_reutilisation.qmd
+      - 05-notebook-java-heritage/06_java_L_heritage_lecture.qmd
+      - 05-notebook-java-heritage/05_java_101_P_Heritage.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
+    max-description-length: 200
+  # 7) Collections
+  - id: sec-06
+    contents:
+      - 06-notebook-java-collections/07_java_L_collections.qmd
+      - 06-notebook-java-collections/06_java_101_P_Collections.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
+    max-description-length: 200
+  # 8) JDBC (simple example right after the introductory lesson)
   - id: sec-12
-    contents: "12-notebook-java-jdbc/*.qmd"
-    sort: filename
+    contents:
+      - 12-notebook-java-jdbc/01_java_jdbc_L_IntroductionJDBC.qmd
+      - 12-notebook-java-jdbc/03_java_jdbc_L_ExempleSimple.qmd
+      - 12-notebook-java-jdbc/02_java_jdbc_L_Avance.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
+    max-description-length: 200
+  # 9) Exceptions
+  - id: sec-07
+    contents:
+      - 07-notebook-java-exceptions/07_java_101_L_Exceptions.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
+    max-description-length: 200
+  # 10) Revision TP
+  - id: sec-13
+    contents:
+      - 13-notebook-revision-java/10_java_P_revision.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
+    max-description-length: 200
+  # 11) Post-Java-8 (new history lesson, then the three existing lessons)
+  - id: sec-11
+    contents:
+      - 11-notebook-java-after8/10_java_L_histoire_apres8.qmd
+      - 11-notebook-java-after8/01_java_after8_L_Functionnal.qmd
+      - 11-notebook-java-after8/02_java_after8_L_Stream.qmd
+      - 11-notebook-java-after8/03_java_after8_L_Misc.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
+    max-description-length: 200
+  # 12) IO
+  - id: sec-08
+    contents:
+      - 08-notebook-java-io/08_java_101_L_IO.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
+    max-description-length: 200
+  # 13) Serialisation
+  - id: sec-09
+    contents:
+      - 09-notebook-java-serialisation/09_java_101_L_Serialisation.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
     max-description-length: 200

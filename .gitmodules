@@ -49,3 +49,7 @@
 	path = 09-notebook-java-serialisation
 	url = git@github.com:ebpro/notebook-java-serialisation.git
 	branch = develop
+[submodule "13-notebook-revision-java"]
+	path = 13-notebook-revision-java
+	url = git@github.com:ebpro/notebook-revision-java.git
+	branch = develop

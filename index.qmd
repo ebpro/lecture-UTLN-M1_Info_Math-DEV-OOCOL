@@ -14,50 +14,54 @@ jupyter: java
 ---
 
 
-## Java — Introduction
+## Les origines de Java et introduction
 
 <div id="sec-01"></div>
 
-## Java — Installation & Compilation
+## Installation et mécanique de compilation
 
 <div id="sec-02"></div>
 
-## Java — Maven
-
-<div id="sec-03"></div>
-
-## Java — Bases
-
-<div id="sec-04"></div>
-
-## Java — Héritage
-
-<div id="sec-05"></div>
-
-## Java — Collections
-
-<div id="sec-06"></div>
-
-## Java — Exceptions
-
-<div id="sec-07"></div>
-
-## Java — Entrée/Sortie
-
-<div id="sec-08"></div>
-
-## Java — Sérialisation
-
-<div id="sec-09"></div>
-
-## Git
+## Git — bases et workflows
 
 <div id="sec-10"></div>
 
-## Après Java 8
+## Java — gestion de projet avec Maven
+
+<div id="sec-03"></div>
+
+## Java — bases du langage
+
+<div id="sec-04"></div>
+
+## Java — réutilisation et héritage
+
+<div id="sec-05"></div>
+
+## Java — collections
+
+<div id="sec-06"></div>
+
+## JDBC — accès aux bases de données
+
+<div id="sec-12"></div>
+
+## Java — exceptions
+
+<div id="sec-07"></div>
+
+## Révision — mise à niveau Java et Git
+
+<div id="sec-13"></div>
+
+## Après Java 8 — histoire et évolutions du langage
 
 <div id="sec-11"></div>
 
-## JDBC
+## Java — entrée/sortie
 
-<div id="sec-12"></div>
+<div id="sec-08"></div>
+
+## Java — sérialisation
+
+<div id="sec-09"></div>
