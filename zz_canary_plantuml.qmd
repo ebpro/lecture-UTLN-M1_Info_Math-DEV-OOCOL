@@ -1,14 +1,25 @@
 ---
-title: "Canary PlantUML (temporaire)"
+title: "Canary PlantUML v2 (temporaire)"
 ---
 
-Test de rendu PlantUML dans l'image de render CI :
+## V1 — fence sans accolades
 
-```{plantuml}
+```plantuml
 @startuml
-Canard <|-- FaisanDeLicense
-class Canard {
-  +crier(): String
-}
+A <|-- B
 @enduml
+```
+
+## V2 — classe .plantuml sur fence accolade-free
+
+```{.plantuml}
+@startuml
+C <|-- D
+@enduml
+```
+
+## V3 — attribut raw
+
+```{=html}
+<!-- témoin négatif: ne doit rien produire d'inattendu -->
 ```
