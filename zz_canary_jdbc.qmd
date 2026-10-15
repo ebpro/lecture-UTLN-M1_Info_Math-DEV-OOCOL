@@ -1,0 +1,70 @@
+---
+title: "ZZ Canary JDBC"
+jupyter: java
+execute:
+  echo: true
+  output: true
+---
+
+Canary CI (hors `course-order.yml`) : prouve dooD -> Postgres via `dind` depuis IJava, puis mesure le cout d'un second conteneur postgis.
+
+## Postgres via dooD
+
+```{bash}
+echo "docker server: $(docker version --format '{{.Server.Version}}')"
+docker pull postgres:17-alpine
+docker run -d --label ebpro-render=true --name zz-pg -e POSTGRES_PASSWORD=zztest -e POSTGRES_DB=zzdb -p 5432:5432 postgres:17-alpine
+ready=false
+for i in $(seq 1 60); do
+  if docker exec zz-pg pg_isready -U postgres >/dev/null 2>&1; then ready=true; break; fi
+  sleep 2
+done
+echo "zz-pg ready=$ready apres i=$i tentatives"
+```
+
+```{bash}
+docker exec zz-pg psql -U postgres -d zzdb -c "CREATE TABLE zz_stop(id int primary key, name text, lat double precision, lon double precision); INSERT INTO zz_stop VALUES (1,'Pommier',43.125,6.032),(2,'Chêne',43.130,6.040);"
+```
+
+## JDBC depuis IJava via dind
+
+```{java}
+%maven org.postgresql:postgresql:42.7.3
+```
+
+```{java}
+try (var c = java.sql.DriverManager.getConnection("jdbc:postgresql://dind:5432/zzdb", "postgres", "zztest");
+     var s = c.createStatement();
+     var r = s.executeQuery("SELECT name, lat FROM zz_stop ORDER BY id")) {
+    while (r.next()) System.out.println(r.getString(1) + " " + r.getDouble(2));
+}
+```
+
+## PostGIS (cout du second conteneur)
+
+```{bash}
+docker pull postgis/postgis:17-master
+docker run -d --label ebpro-render=true --name zz-pgs -e POSTGRES_PASSWORD=zztest -e POSTGRES_DB=zzgis -p 5433:5432 postgis/postgis:17-master
+ready=false
+for i in $(seq 1 60); do
+  if docker exec zz-pgs pg_isready -U postgres >/dev/null 2>&1; then ready=true; break; fi
+  sleep 2
+done
+echo "zz-pgs ready=$ready apres i=$i tentatives"
+docker exec zz-pgs psql -U postgres -d zzgis -c "CREATE EXTENSION IF NOT EXISTS postgis; SELECT PostGIS_Version();"
+docker exec zz-pgs psql -U postgres -d zzgis -tAc "SELECT ST_Distance(ST_SetSRID(ST_MakePoint(6.032,43.125),4326)::geography, ST_SetSRID(ST_MakePoint(6.040,43.130),4326)::geography);"
+```
+
+```{java}
+try (var c = java.sql.DriverManager.getConnection("jdbc:postgresql://dind:5433/zzgis", "postgres", "zztest");
+     var s = c.createStatement();
+     var r = s.executeQuery("SELECT ST_Distance(ST_SetSRID(ST_MakePoint(6.032,43.125),4326)::geography, ST_SetSRID(ST_MakePoint(6.040,43.130),4326)::geography) AS d_m")) {
+    while (r.next()) System.out.println("distance_m=" + r.getDouble(1));
+}
+```
+
+## Nettoyage
+
+```{bash}
+docker stop zz-pg zz-pgs
+```
