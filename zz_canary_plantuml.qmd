@@ -1,0 +1,14 @@
+---
+title: "Canary PlantUML (temporaire)"
+---
+
+Test de rendu PlantUML dans l'image de render CI :
+
+```{plantuml}
+@startuml
+Canard <|-- FaisanDeLicense
+class Canard {
+  +crier(): String
+}
+@enduml
+```

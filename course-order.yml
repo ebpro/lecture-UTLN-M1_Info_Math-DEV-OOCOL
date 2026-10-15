@@ -14,6 +14,7 @@ listing:
       - 01-notebook-java-introduction/00_java_L_origines.qmd
       - 01-notebook-java-introduction/01_java_101_L_Introduction.qmd
     type: grid
+    sort: false
     grid-columns: 3
     grid-item-border: true
     image-height: 250px
@@ -33,6 +34,7 @@ listing:
       - 02-notebook-java-install/02_java_P_mecanique.qmd
       - 02-notebook-java-install/02_java_101_InstallationCompilation.qmd
     type: grid
+    sort: false
     grid-columns: 3
     grid-item-border: true
     image-height: 250px
@@ -53,6 +55,7 @@ listing:
       - 10-notebook-git/01_git_L_Bases.qmd
       - 10-notebook-git/02_git_L_Workflows.qmd
     type: grid
+    sort: false
     grid-columns: 3
     grid-item-border: true
     image-height: 250px
@@ -71,6 +74,7 @@ listing:
     contents:
       - 03-notebook-java-maven/03_java_101_Maven_Introduction.qmd
     type: grid
+    sort: false
     grid-columns: 3
     grid-item-border: true
     image-height: 250px
@@ -90,6 +94,7 @@ listing:
       - 04-notebook-java-bases/04_java_101_L_Bases.qmd
       - 04-notebook-java-bases/04_java_101_P_Bases.qmd
     type: grid
+    sort: false
     grid-columns: 3
     grid-item-border: true
     image-height: 250px
@@ -111,6 +116,7 @@ listing:
       - 05-notebook-java-heritage/06_java_L_heritage_lecture.qmd
       - 05-notebook-java-heritage/05_java_101_P_Heritage.qmd
     type: grid
+    sort: false
     grid-columns: 3
     grid-item-border: true
     image-height: 250px
@@ -130,6 +136,7 @@ listing:
       - 06-notebook-java-collections/06_java_101_L_Collections.qmd
       - 06-notebook-java-collections/06_java_101_P_Collections.qmd
     type: grid
+    sort: false
     grid-columns: 3
     grid-item-border: true
     image-height: 250px
@@ -150,6 +157,7 @@ listing:
       - 12-notebook-java-jdbc/03_java_jdbc_L_ExempleSimple.qmd
       - 12-notebook-java-jdbc/02_java_jdbc_L_Avance.qmd
     type: grid
+    sort: false
     grid-columns: 3
     grid-item-border: true
     image-height: 250px
@@ -168,6 +176,7 @@ listing:
     contents:
       - 07-notebook-java-exceptions/07_java_101_L_Exceptions.qmd
     type: grid
+    sort: false
     grid-columns: 3
     grid-item-border: true
     image-height: 250px
@@ -186,6 +195,7 @@ listing:
     contents:
       - 13-notebook-revision-java/10_java_P_revision.qmd
     type: grid
+    sort: false
     grid-columns: 3
     grid-item-border: true
     image-height: 250px
@@ -207,6 +217,7 @@ listing:
       - 11-notebook-java-after8/02_java_after8_L_Stream.qmd
       - 11-notebook-java-after8/03_java_after8_L_Misc.qmd
     type: grid
+    sort: false
     grid-columns: 3
     grid-item-border: true
     image-height: 250px
@@ -225,6 +236,7 @@ listing:
     contents:
       - 08-notebook-java-io/08_java_101_L_IO.qmd
     type: grid
+    sort: false
     grid-columns: 3
     grid-item-border: true
     image-height: 250px
@@ -243,6 +255,7 @@ listing:
     contents:
       - 09-notebook-java-serialisation/09_java_101_L_Serialisation.qmd
     type: grid
+    sort: false
     grid-columns: 3
     grid-item-border: true
     image-height: 250px
