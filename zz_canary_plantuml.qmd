@@ -1,25 +1,20 @@
 ---
 title: "Canary PlantUML v2 (temporaire)"
+execute:
+  echo: true
+  output: true
+  error: true
 ---
 
-## V1 — fence sans accolades
-
-```plantuml
+```{java}
+%%plantUML
 @startuml
-A <|-- B
+interface Collection
+Collection <|-- List
+Collection <|-- Set
+class ArrayList
+class HashSet
+List <|.. ArrayList
+Set <|.. HashSet
 @enduml
-```
-
-## V2 — classe .plantuml sur fence accolade-free
-
-```{.plantuml}
-@startuml
-C <|-- D
-@enduml
-```
-
-## V3 — attribut raw
-
-```{=html}
-<!-- témoin négatif: ne doit rien produire d'inattendu -->
 ```
