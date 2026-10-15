@@ -1,7 +1,7 @@
 name: CI Render
 on:
   push:
-    branches: [develop]
+    branches: ['**']
     tags: ['v*']
   # v1.3.22: preview deploys + auto-cleanup
   delete:
@@ -14,14 +14,11 @@ concurrency:
 
 jobs:
   render:
-    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.24
+    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.27
     secrets: inherit
     with:
-      utils-ref: v1.3.24
+      utils-ref: v1.3.27
       deploy-static: ${{ github.event_name != 'pull_request' }}
       quarto-image: "ghcr.io/ebpro/jupyter-base:quarto-full-fix-chromium-ci-headless-render"
       profiles: "notes,slides"
-      deploy-pages: true
-      deploy-cloudflare: true
-      cf-project-name: "lecture-utln-m1-info-math-dev-oocol"
       enable-docker: true
