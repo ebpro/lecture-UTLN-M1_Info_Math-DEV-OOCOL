@@ -19,7 +19,7 @@ jobs:
     with:
       utils-ref: v1.3.24
       deploy-static: ${{ github.event_name != 'pull_request' }}
-      quarto-image: "ghcr.io/ebpro/jupyter-base:quarto-full-fix-chromium-ci-headless-render"
+      quarto-image: "ghcr.io/ebpro/solen:quarto-full-build-20261010T172146Z"
       profiles: "notes,slides"
       deploy-pages: true
       deploy-cloudflare: true
