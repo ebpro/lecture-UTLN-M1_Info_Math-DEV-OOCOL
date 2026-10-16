@@ -153,9 +153,7 @@ listing:
   # 8) JDBC (simple example right after the introductory lesson)
   - id: sec-12
     contents:
-      - 12-notebook-java-jdbc/01_java_jdbc_L_IntroductionJDBC.qmd
-      - 12-notebook-java-jdbc/03_java_jdbc_L_ExempleSimple.qmd
-      - 12-notebook-java-jdbc/02_java_jdbc_L_Avance.qmd
+      - 12-notebook-java-jdbc/08_java_L_jdbc.qmd
     type: grid
     sort: false
     grid-columns: 3
