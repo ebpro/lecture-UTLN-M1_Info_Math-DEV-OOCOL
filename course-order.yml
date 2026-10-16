@@ -48,8 +48,7 @@ listing:
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
     max-description-length: 200
-  # 3) Git from day one (the Git lecture; java-side bases stub 03_java_L_git_bases.qmd is
-  # re-added to this listing in wave B once written)
+  # 3) Git guide (standalone, course-agnostic; java-side stub 03 dropped by decision — the guide stays independent of this course)
   - id: sec-10
     contents:
       - 10-notebook-git/01_git_L_Bases.qmd
