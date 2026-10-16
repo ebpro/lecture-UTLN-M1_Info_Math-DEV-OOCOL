@@ -154,6 +154,7 @@ listing:
   - id: sec-12
     contents:
       - 12-notebook-java-jdbc/08_java_L_jdbc.qmd
+      - 12-notebook-java-jdbc/09_java_P_tests.qmd
     type: grid
     sort: false
     grid-columns: 3
