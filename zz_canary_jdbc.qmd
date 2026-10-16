@@ -1,139 +1,169 @@
 ---
-title: "ZZ Canary JDBC v2"
+title: "ZZ Canary JDBC v3"
 jupyter: java
 execute:
   echo: true
   output: true
+  timeout: 1800
 ---
 
-Canary CI diagnostique v2 (hors `course-order.yml`) : ne peut PAS faire échouer le rendu. Démarre Postgres via dooD côté hôte, puis distingue les chemins réseau `dind` (host-gateway) vs IP passerelle brute depuis IJava. Sorties = verdicts pour le design de la leçon 08.
+Canary de diagnostic réseau/JDBC — tout-Java (les cellules `{bash}` sont
+silencieusement ignorées par Quarto quand le FM déclare un kernel scalaire
+`jupyter: java`). Docker via `ProcessBuilder` dans le conteneur de rendu
+(dooD, socket de l'hôte). À retirer à l'APPLY 08.
 
-## C1 — Démarrage Postgres + diagnostics réseau (bash, non-faillant)
-
-```{bash}
-set +e
-rm -f /tmp/zz_diag.txt
-echo "docker server: $(docker version --format '{{.Server.Version}}' 2>&1)"
-docker rm -f zz-pg 2>/dev/null
-docker run -d --label ebpro-render=true --name zz-pg -e POSTGRES_PASSWORD=zztest -e POSTGRES_DB=zzdb -p 5432:5432 postgres:17-alpine || echo RUNFAIL
-ready=NO
-for i in $(seq 1 30); do
-  if docker exec zz-pg pg_isready -U postgres >/dev/null 2>&1; then ready=YES; echo "READY=$i"; break; fi
-  sleep 2
-done
-[ "$ready" = "NO" ] && echo "NOTREADY apres $i tentatives"
-# --- diagnostics dans /tmp/zz_diag.txt (tout redirigé, jamais fatal) ---
-{
-  echo "=== docker ps ==="
-  docker ps --filter name=zz-pg --format '{{.Names}} {{.Status}} {{.Ports}}'
-  echo "=== ports binding (docker inspect) ==="
-  docker inspect -f '{{json .NetworkSettings.Ports}}' zz-pg 2>&1
-  echo "=== getent hosts dind ==="
-  getent hosts dind 2>&1
-  echo "=== default route ==="
-  ip route 2>&1 | grep default
-  echo "=== tcp test dind:5432 ==="
-  (exec 3<>/dev/tcp/dind/5432 && echo TCP-DIND-OPEN && exec 3>&-) 2>&1 || echo TCP-DIND-CLOSED
-} > /tmp/zz_diag.txt 2>&1
-GWIP=$(ip route 2>/dev/null | grep default | awk '{print $3}' | head -1)
-DINDIP=$(getent hosts dind 2>/dev/null | awk '{print $1}' | head -1)
-{
-  echo "=== tcp test gateway:$GWIP:5432 ==="
-  if [ -n "$GWIP" ] && [ "$GWIP" != "$DINDIP" ]; then
-    (exec 3<>/dev/tcp/$GWIP/5432 && echo TCP-GW-OPEN && exec 3>&-) 2>&1 || echo TCP-GW-CLOSED
-  else
-    echo "TCP-GW-SKIPPED (same as dind or no gw)"
-  fi
-} >> /tmp/zz_diag.txt 2>&1
-# --- seed ---
-docker exec zz-pg psql -U postgres -d zzdb -c "CREATE TABLE IF NOT EXISTS zz_stop(id int primary key, name text, lat double precision); INSERT INTO zz_stop VALUES (1,'Pommier',43.125),(2,'Chene',43.130) ON CONFLICT DO NOTHING;" || echo SEEDFAIL
-echo "----- /tmp/zz_diag.txt -----"
-cat /tmp/zz_diag.txt
-true
-```
-
-## C2 — Dépendances JDBC (java)
-
-```{java}
-%maven com.h2database:h2:2.3.232
-```
+## J1 — Pilote PostgreSQL
 
 ```{java}
 %maven org.postgresql:postgresql:42.7.3
 ```
 
-## C3 — H2 baseline + Postgres via dind (java, try/catch totaux)
+## J2 — Diagnostics réseau AVANT tout
 
 ```{java}
-var report = new java.util.ArrayList<String>();
-try (var c = java.sql.DriverManager.getConnection("jdbc:h2:mem:zz", "sa", "");
-     var s = c.createStatement()) {
-    s.execute("CREATE TABLE zz_stop(id int primary key, name varchar(64), lat double precision)");
-    s.execute("INSERT INTO zz_stop VALUES (1,'Pommier',43.125),(2,'Chene',43.130)");
-    try (var r = s.executeQuery("SELECT count(*) FROM zz_stop")) {
-        r.next();
-        report.add("H2 rows=" + r.getInt(1) + " OK");
-    }
-} catch (Throwable t) {
-    report.add("H2 FAIL: " + t);
-}
-try (var c = java.sql.DriverManager.getConnection("jdbc:postgresql://dind:5432/zzdb", "postgres", "zztest");
-     var s = c.createStatement();
-     var r = s.executeQuery("SELECT name, lat FROM zz_stop ORDER BY id")) {
-    var sb = new StringBuilder("PG-DIND rows=");
-    while (r.next()) sb.append(r.getString(1)).append("/").append(r.getDouble(2)).append(" ");
-    report.add(sb.toString());
-} catch (Throwable t) {
-    report.add("PG-DIND FAIL: " + t);
-}
-for (var line : report) System.out.println(line);
-try (var w = new java.io.FileWriter("/tmp/zz_java.txt", false)) {
-    for (var line : report) { w.write(line); w.write("\n"); }
-} catch (Throwable t) { System.out.println("WRITE-FILE FAIL: " + t); }
-```
-
-## C4 — Postgres via IP passerelle brute (java, try/catch total)
-
-```{java}
-String gwIp = null;
 try {
-    for (var line : java.nio.file.Files.readAllLines(java.nio.file.Path.of("/tmp/zz_diag.txt"))) {
-        if (line.contains("default")) {
-            for (var tok : line.trim().split("\\s+")) {
-                if (tok.matches("\\d+\\.\\d+\\.\\d+\\.\\d+")) { gwIp = tok; break; }
-            }
-            if (gwIp != null) break;
-        }
-    }
-} catch (Throwable t) { System.out.println("READ-DIAG FAIL: " + t); }
-String verdict;
-if (gwIp == null) {
-    verdict = "PG-GW FAIL: no gateway ip found";
-} else {
-    try (var c = java.sql.DriverManager.getConnection("jdbc:postgresql://" + gwIp + ":5432/zzdb", "postgres", "zztest");
-         var s = c.createStatement();
-         var r = s.executeQuery("SELECT name, lat FROM zz_stop ORDER BY id")) {
-        var sb = new StringBuilder("PG-GW via " + gwIp + " rows=");
-        while (r.next()) sb.append(r.getString(1)).append("/").append(r.getDouble(2)).append(" ");
-        verdict = sb.toString();
-    } catch (Throwable t) {
-        verdict = "PG-GW via " + gwIp + " FAIL: " + t;
-    }
+    var a = java.net.InetAddress.getByName("dind");
+    System.out.println("DNS-DIND=" + a.getHostAddress());
+} catch (Throwable t) {
+    System.out.println("DNS-DIND FAIL: " + t);
 }
-System.out.println(verdict);
-try (var w = new java.io.FileWriter("/tmp/zz_java.txt", true)) {
-    w.write(verdict); w.write("\n");
-} catch (Throwable t) { System.out.println("APPEND-FILE FAIL: " + t); }
+System.out.println("DOCKER-HOST=" + System.getenv("DOCKER_HOST"));
+try {
+    var p = new ProcessBuilder("docker", "version", "--format", "{{.ServerVersion}}")
+            .redirectErrorStream(true).start();
+    var out = new String(p.getInputStream().readAllBytes());
+    p.waitFor();
+    System.out.println("DOCKER-SRV=" + out.trim() + " (exit=" + p.exitValue() + ")");
+} catch (Throwable t) {
+    System.out.println("DOCKER-SRV FAIL: " + t);
+}
 ```
 
-## C5 — Consolidation des diagnostics (bash, non-faillant)
+## J3 — Lancement Postgres + readiness JDBC
 
-```{bash}
-set +e
-docker stop zz-pg || true
-echo "===JAVA-DIAG==="
-cat /tmp/zz_java.txt || echo NOJAVAFILE
-echo "===NET-DIAG==="
-cat /tmp/zz_diag.txt
-true
+```{java}
+try {
+    new ProcessBuilder("docker", "rm", "-f", "zz-pg")
+            .redirectErrorStream(true).start().waitFor();
+} catch (Throwable t) { /* toléré */ }
+try {
+    var p = new ProcessBuilder("docker", "run", "-d",
+            "--label", "ebpro-render=true", "--name", "zz-pg",
+            "-e", "POSTGRES_PASSWORD=zztest", "-e", "POSTGRES_DB=zzdb",
+            "-p", "5432:5432", "postgres:17-alpine")
+            .redirectErrorStream(true).start();
+    var out = new String(p.getInputStream().readAllBytes());
+    p.waitFor();
+    System.out.println("RUN=" + out.trim() + " (exit=" + p.exitValue() + ")");
+} catch (Throwable t) {
+    System.out.println("RUN FAIL: " + t);
+}
+var props = new java.util.Properties();
+props.put("user", "postgres");
+props.put("password", "zztest");
+props.put("connectTimeout", "5");
+boolean up = false;
+for (int i = 1; i <= 60; i++) {
+    try (var c = java.sql.DriverManager.getConnection(
+            "jdbc:postgresql://dind:5432/zzdb", props)) {
+        up = true;
+        System.out.println("READY-ATTEMPTS=" + i);
+        break;
+    } catch (Throwable t) {
+        try { Thread.sleep(2000); } catch (InterruptedException e) { }
+    }
+}
+if (!up) System.out.println("NOTREADY-60");
+```
+
+## J4 — Seed + requête via dind:5432
+
+```{java}
+try (var c = java.sql.DriverManager.getConnection(
+        "jdbc:postgresql://dind:5432/zzdb", "postgres", "zztest");
+     var s = c.createStatement()) {
+    s.execute("CREATE TABLE zz_stop(id int primary key, name text, lat double precision)");
+    s.execute("INSERT INTO zz_stop VALUES (1,'Pommier',43.125),(2,'Chene',43.130)");
+    try (var r = s.executeQuery("SELECT id, name, lat FROM zz_stop ORDER BY id")) {
+        var sb = new StringBuilder("PG-DIND rows=");
+        while (r.next()) {
+            sb.append(r.getInt(1)).append("/").append(r.getString(2))
+              .append("/").append(r.getDouble(3)).append(" ");
+        }
+        System.out.println(sb.toString().trim());
+    }
+} catch (Throwable t) {
+    System.out.println("PG-DIND FAIL: " + t
+            + (t.getCause() != null ? " | cause=" + t.getCause() : ""));
+}
+```
+
+## J5 — PostGIS sur 5433
+
+```{java}
+try {
+    new ProcessBuilder("docker", "rm", "-f", "zz-pgs")
+            .redirectErrorStream(true).start().waitFor();
+} catch (Throwable t) { /* toléré */ }
+try {
+    var p = new ProcessBuilder("docker", "run", "-d",
+            "--label", "ebpro-render=true", "--name", "zz-pgs",
+            "-e", "POSTGRES_PASSWORD=zztest", "-e", "POSTGRES_DB=zzgis",
+            "-p", "5433:5432", "postgis/postgis:17-master")
+            .redirectErrorStream(true).start();
+    var out = new String(p.getInputStream().readAllBytes());
+    p.waitFor();
+    System.out.println("RUN-PGIS=" + out.trim() + " (exit=" + p.exitValue() + ")");
+} catch (Throwable t) {
+    System.out.println("RUN-PGIS FAIL: " + t);
+}
+var props = new java.util.Properties();
+props.put("user", "postgres");
+props.put("password", "zztest");
+props.put("connectTimeout", "5");
+boolean up = false;
+for (int i = 1; i <= 60; i++) {
+    try (var c = java.sql.DriverManager.getConnection(
+            "jdbc:postgresql://dind:5433/zzgis", props)) {
+        up = true;
+        System.out.println("READY-PGIS-ATTEMPTS=" + i);
+        break;
+    } catch (Throwable t) {
+        try { Thread.sleep(2000); } catch (InterruptedException e) { }
+    }
+}
+if (!up) System.out.println("NOTREADY-PGIS-60");
+if (up) {
+    try (var c = java.sql.DriverManager.getConnection(
+            "jdbc:postgresql://dind:5433/zzgis", "postgres", "zztest");
+         var s = c.createStatement()) {
+        s.execute("CREATE EXTENSION IF NOT EXISTS postgis");
+        try (var r = s.executeQuery(
+                "SELECT PostGIS_Version(), ST_Distance("
+              + "ST_SetSRID(ST_MakePoint(6.032,43.125),4326)::geography, "
+              + "ST_SetSRID(ST_MakePoint(6.040,43.130),4326)::geography)")) {
+            r.next();
+            System.out.println("PGIS=" + r.getString(1)
+                    + " distance_m=" + r.getDouble(2));
+        }
+    } catch (Throwable t) {
+        System.out.println("PGIS FAIL: " + t
+                + (t.getCause() != null ? " | cause=" + t.getCause() : ""));
+    }
+}
+```
+
+## J6 — Nettoyage
+
+```{java}
+try {
+    var p = new ProcessBuilder("docker", "stop", "zz-pg", "zz-pgs")
+            .redirectErrorStream(true).start();
+    var out = new String(p.getInputStream().readAllBytes());
+    p.waitFor();
+    System.out.println("STOP-OUT=" + out.trim() + " (exit=" + p.exitValue() + ")");
+} catch (Throwable t) {
+    System.out.println("STOP FAIL: " + t);
+}
+System.out.println("CLEANED");
 ```
