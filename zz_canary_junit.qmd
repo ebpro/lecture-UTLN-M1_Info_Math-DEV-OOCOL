@@ -70,7 +70,7 @@ class ZZVertTest {
 
     @ParameterizedTest
     @CsvSource(value = {"\"  a  \",\"a\"", "\"B C\",\"B C\""}, quoteCharacter = '"')
-    @DisplayName("strip paramétré, quoteCharacter='"')
+    @DisplayName("strip paramétré avec guillemets")
     void normalise(String brut, String attendu) {
         assertEquals(attendu, brut.strip());
     }
