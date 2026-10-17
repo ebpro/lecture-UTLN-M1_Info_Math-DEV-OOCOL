@@ -267,3 +267,22 @@ listing:
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
     max-description-length: 200
+  # 14) Annexe JavaFX (root-level, sample épinglé)
+  - id: sec-14
+    contents:
+      - 90_java_L_annexe_javafx.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
+    max-description-length: 200

@@ -65,3 +65,7 @@ jupyter: java
 ## Java — sérialisation
 
 <div id="sec-09"></div>
+
+## Annexe — JavaFX en pratique : de la dépendance au runtime
+
+<div id="sec-14"></div>
