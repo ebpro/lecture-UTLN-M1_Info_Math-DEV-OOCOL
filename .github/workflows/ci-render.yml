@@ -14,10 +14,10 @@ concurrency:
 
 jobs:
   render:
-    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.32
+    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.24
     secrets: inherit
     with:
-      utils-ref: v1.3.32
+      utils-ref: v1.3.24
       deploy-static: ${{ github.event_name != 'pull_request' }}
       quarto-image: "ghcr.io/ebpro/solen:quarto-full-build-20261010T172146Z"
       profiles: "notes,slides"
