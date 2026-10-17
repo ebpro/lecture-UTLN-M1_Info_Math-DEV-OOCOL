@@ -154,8 +154,8 @@ class ReservationTest {
     }
 }
 EOF
-javac -d out *.java
-java -jar /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner --class-path out --scan-class-path out
+javac -cp /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar -d out *.java
+java -jar /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner --fail-if-no-tests --class-path out --scan-class-path out
 ```
 
 **La suite est verte ; elle ne prouve rien.** 2 tests, 2 réussites, code de sortie 0.
@@ -168,7 +168,7 @@ absente.
 `/tmp/ai-tp2/s1/ReservationTest.java` : après les deux appels, vérifiez avec
 `assertEquals` le nombre de couverts réellement installés (`getCouverts()`), puis
 relancez la compilation et le lanceur dans `/tmp/ai-tp2/s1`. Attention : ne relancez pas la cellule ci-dessus — ses heredocs réécriraient le squelette et
-écraseraient votre complétion ; relancez seulement `javac -d out *.java` et la commande du lanceur.
+écraseraient votre complétion ; relancez seulement `javac -cp /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar -d out *.java` et la commande du lanceur.
 
 **Après votre complétion, attendez-vous à** ce rouge — extrait épinglé du labo
 (transcription ; le rouge est votre travail, il n'est pas exécuté à votre place) :
@@ -243,8 +243,8 @@ class ReservationTest {
     }
 }
 EOF
-javac -d out *.java
-java -jar /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner --class-path out --scan-class-path out
+javac -cp /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar -d out *.java
+java -jar /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner --fail-if-no-tests --class-path out --scan-class-path out
 ```
 
 2/2 verts. Pourtant, ni le constructeur ni `changerNom` ne consultent `nom` : le
@@ -255,7 +255,7 @@ pas — ils ne voient que le chemin heureux.
 test qui **éprouve le contrat** — rouge tant que le code ne vérifie rien. Indices : un
 `assertThrows` qui attend une `IllegalArgumentException` du constructeur appelé avec un
 nom `null`, et un message d'échec explicite dans l'assertion. Relancez
-`javac -d out *.java` puis le lanceur — dans sa forme `--scan-class-path`, il exécute tous les tests compilés dans `out`, le vôtre donc.
+`javac -cp /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar -d out *.java` puis le lanceur — dans sa forme `--scan-class-path`, il exécute tous les tests compilés dans `out`, le vôtre donc.
 
 **Après votre écriture, attendez-vous à** ce rouge — extrait épinglé du labo
 (transcription) :
@@ -334,8 +334,8 @@ class ContratNullRef {
     }
 }
 EOF
-javac -d out *.java
-java -jar /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner --class-path out --scan-class-path out
+javac -cp /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar -d out *.java
+java -jar /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner --fail-if-no-tests --class-path out --scan-class-path out
 ```
 
 3/3 verts, code de sortie 0 : le contrat est passé de la promesse au mécanisme
