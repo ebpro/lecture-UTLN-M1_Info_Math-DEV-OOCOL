@@ -1,0 +1,15 @@
+# Exclusion de rendu des leçons legacy dé-listées de l'arc v2026 (voir AGENTS.md).
+# Mécanisme : négations project.render (syntaxe documentée, quarto.org/docs/projects/
+# quarto-projects.html#render-targets) injectées par metadata racine.
+# OBLIGATION DE VÉRIFICATION : après chaque rendu CI, les 5 URLs correspondantes
+# doivent retourner 404 sur le site déployé de cette branche ; si elles reviennent
+# 200, le mécanisme n'a pas été honoré depuis ce fichier et il faut re-trancher.
+project:
+  render:
+    - "*.qmd"
+    - "**/*.qmd"
+    - "!05-notebook-java-heritage/05_java_101_L_Heritage.qmd"
+    - "!06-notebook-java-collections/06_java_101_L_Collections.qmd"
+    - "!12-notebook-java-jdbc/01_java_jdbc_L_IntroductionJDBC.qmd"
+    - "!12-notebook-java-jdbc/02_java_jdbc_L_Avance.qmd"
+    - "!12-notebook-java-jdbc/03_java_jdbc_L_ExempleSimple.qmd"
