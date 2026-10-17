@@ -1,7 +1,6 @@
 # AGENTS.md — lecture-UTLN-M1_Info_Math-DEV-OOCOL
 
-Playbook de maintien du cours (contenu français, slugs anglais). Quarto exclut
-automatiquement `AGENTS.md` des cibles de rendu : ce fichier n'est jamais publié.
+Playbook de maintien du cours (contenu français, slugs anglais). ⚠️ CONTRAIREMENT À LA DOCUMENTATION RÉCENTE DE QUARTO, la chaîne de rendu du projet (image solen, Quarto 1.10.18, utils `v1.3.24`) N'EXCLUT PAS `AGENTS.md` : le fichier est rendu et publié (`AGENTS.html`, prouvé par le run #89 du 2026-10-17). Conséquence contraignante : ce fichier ne doit JAMAIS contenir de secret ni de donnée sensible. L'exclusion propre est à re-trancher plus tard (front-matter `draft: true`, ou exclusion documentée dans une future version de la chaîne).
 
 ## Identité
 - UE « DEV — OO Collaboratif », M1 Informatique-Mathématiques. Arc v2026 : « POO moderne : réutilisation & maintenabilité ».
