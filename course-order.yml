@@ -267,6 +267,44 @@ listing:
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
     max-description-length: 200
+  # 15) module IA (lecon+TP, racine parent)
+  - id: sec-15
+    contents:
+      - 80_ai_L_generative_assistant.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
+    max-description-length: 200
+  # 16) module IA (lecon+TP, racine parent)
+  - id: sec-16
+    contents:
+      - 81_ai_P_generation_controlee.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "description"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
+    max-description-length: 200
   # 14) Annexe JavaFX (root-level, sample épinglé)
   - id: sec-14
     contents:
