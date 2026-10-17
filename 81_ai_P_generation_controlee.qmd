@@ -155,7 +155,7 @@ class ReservationTest {
 }
 EOF
 javac -d out *.java
-java -jar /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner -cp out -s ReservationTest
+java -jar /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner --class-path out --scan-class-path out
 ```
 
 **La suite est verte ; elle ne prouve rien.** 2 tests, 2 réussites, code de sortie 0.
@@ -244,7 +244,7 @@ class ReservationTest {
 }
 EOF
 javac -d out *.java
-java -jar /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner -cp out -s ReservationTest
+java -jar /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner --class-path out --scan-class-path out
 ```
 
 2/2 verts. Pourtant, ni le constructeur ni `changerNom` ne consultent `nom` : le
@@ -255,7 +255,7 @@ pas — ils ne voient que le chemin heureux.
 test qui **éprouve le contrat** — rouge tant que le code ne vérifie rien. Indices : un
 `assertThrows` qui attend une `IllegalArgumentException` du constructeur appelé avec un
 nom `null`, et un message d'échec explicite dans l'assertion. Relancez
-`javac -d out *.java` puis le lanceur en ajoutant `-s ContratNullTest`.
+`javac -d out *.java` puis le lanceur — dans sa forme `--scan-class-path`, il exécute tous les tests compilés dans `out`, le vôtre donc.
 
 **Après votre écriture, attendez-vous à** ce rouge — extrait épinglé du labo
 (transcription) :
@@ -275,7 +275,7 @@ réussit** de la sortie S1. Une suite ne prouve que ce qu'elle ose tenter.
 
 Relancez l'assistant avec ce rouge en main : voici la sortie du second prompt — le
 même `Reservation`, avec une garde de contrat privée appliquée aux deux chemins qui
-écrivent `nom`. Le test de référence ci-dessous est celui du labo, **assumé ici comme corrigé**. La cellule l'écrit sous un nom distinct, `ContratNullRef.java`, pour ne rien écraser dans `/tmp/ai-tp2/s3` ; si votre `ContratNullTest.java` n'y compile pas encore, déplacez-le avant de lancer la cellule (`*.java` compilerait les deux). Comparez le référence au vôtre : si le vôtre était rouge contre la sortie brute et devient vert contre la correction, il est bon.
+écrivent `nom`. Le test de référence ci-dessous est celui du labo, **assumé ici comme corrigé**. La cellule l'écrit sous un nom distinct, `ContratNullRef.java`, pour ne rien écraser dans `/tmp/ai-tp2/s3` ; si votre `ContratNullTest.java` n'y compile pas encore, déplacez-le avant de lancer la cellule : `javac *.java` compilerait les deux et `--scan-class-path` exécuterait tous les tests présents dans `out` — le compte 3/3 attendu suppose le vôtre hors du dossier. Comparez le référence au vôtre : si le vôtre était rouge contre la sortie brute et devient vert contre la correction, il est bon.
 
 ```{bash}
 mkdir -p /tmp/ai-tp2/s3/out && cd /tmp/ai-tp2/s3
@@ -335,7 +335,7 @@ class ContratNullRef {
 }
 EOF
 javac -d out *.java
-java -jar /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner -cp out -s ReservationTest -s ContratNullRef
+java -jar /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner --class-path out --scan-class-path out
 ```
 
 3/3 verts, code de sortie 0 : le contrat est passé de la promesse au mécanisme

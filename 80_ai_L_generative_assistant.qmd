@@ -258,7 +258,7 @@ EOF
 mkdir -p /tmp/ai-tp/f3/out
 cd /tmp/ai-tp
 javac -cp lib/junit-platform-console-standalone-1.11.4.jar -d f3/out f3/Playlist.java f3/PlaylistTest.java
-java -jar lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner -cp f3/out -s PlaylistTest
+java -jar lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner --class-path f3/out --scan-class-path f3/out
 ```
 
 Le rouge est réel, pas rhétorique : l'arbre du launcher marque `removeAtRetireLeBonMorceau() ✘` avec le message d'assertion exact (`expected: <false> but was: <true>`), et le summary affiche `[ 1 tests failed ]` — un seul, mais suffisant pour fermer la porte. Le décalage d'un cran dans `removeAt` est invisible à la compilation ; seul un test *limites* — retirer à l'index 0 puis vérifier la présence — le saisit.
@@ -349,7 +349,7 @@ EOF
 mkdir -p /tmp/ai-tp/f4/out
 cd /tmp/ai-tp
 javac -cp lib/junit-platform-console-standalone-1.11.4.jar -d f4/out f4/Playlist.java f4/PlaylistTest.java
-java -jar lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner -cp f4/out -s PlaylistTest
+java -jar lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner --class-path f4/out --scan-class-path f4/out
 ```
 
 L'arbre est intégralement coché, le summary affiche `[ 4 tests successful ]` et `[ 0 tests failed ]`. En CI, cette contribution serait mergée. Et pourtant — troisième porte.
@@ -434,7 +434,7 @@ EOF
 mkdir -p /tmp/ai-tp/f5/out
 cd /tmp/ai-tp
 javac -cp lib/junit-platform-console-standalone-1.11.4.jar -d f5/out f5/Playlist.java f5/MiniTest.java
-java -jar lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner -cp f5/out -s MiniTest
+java -jar lib/junit-platform-console-standalone-1.11.4.jar execute --disable-ansi-colors --disable-banner --class-path f5/out --scan-class-path f5/out
 ```
 
 Vert : `[ 2 tests successful ]`, `[ 0 tests failed ]`. Cette contribution passe donc les deux premières portes — et elle est *quand même* refusée par la troisième. La revue se conduit avec trois questions, et elles s'appliquent à tout code étranger, humain ou assisté.
