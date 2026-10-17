@@ -255,7 +255,7 @@ pas — ils ne voient que le chemin heureux.
 test qui **éprouve le contrat** — rouge tant que le code ne vérifie rien. Indices : un
 `assertThrows` qui attend une `IllegalArgumentException` du constructeur appelé avec un
 nom `null`, et un message d'échec explicite dans l'assertion. Relancez
-`javac -cp /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar -d out *.java` puis le lanceur — dans sa forme `--scan-class-path`, il exécute tous les tests compilés dans `out`, le vôtre donc.
+`javac -cp /tmp/ai-tp2/lib/junit-platform-console-standalone-1.11.4.jar -d out *.java` puis le lanceur — dans sa forme `--scan-class-path`, il exécute tous les tests compilés dans `out`, le vôtre donc — à une condition que la communauté JUnit impose : votre classe de test doit finir par `Test` ou `Tests` (le filtre de scan par défaut est `^(Test.*|.+[.$]Test.*|.*Tests?)$`) ; c'est pourquoi la référence ci-dessous s'appelle `ContratNullRefTest`.
 
 **Après votre écriture, attendez-vous à** ce rouge — extrait épinglé du labo
 (transcription) :
@@ -275,7 +275,7 @@ réussit** de la sortie S1. Une suite ne prouve que ce qu'elle ose tenter.
 
 Relancez l'assistant avec ce rouge en main : voici la sortie du second prompt — le
 même `Reservation`, avec une garde de contrat privée appliquée aux deux chemins qui
-écrivent `nom`. Le test de référence ci-dessous est celui du labo, **assumé ici comme corrigé**. La cellule l'écrit sous un nom distinct, `ContratNullRef.java`, pour ne rien écraser dans `/tmp/ai-tp2/s3` ; si votre `ContratNullTest.java` n'y compile pas encore, déplacez-le avant de lancer la cellule : `javac *.java` compilerait les deux et `--scan-class-path` exécuterait tous les tests présents dans `out` — le compte 3/3 attendu suppose le vôtre hors du dossier. Comparez le référence au vôtre : si le vôtre était rouge contre la sortie brute et devient vert contre la correction, il est bon.
+écrivent `nom`. Le test de référence ci-dessous est celui du labo, **assumé ici comme corrigé**. La cellule l'écrit sous un nom distinct, `ContratNullRefTest.java`, pour ne rien écraser dans `/tmp/ai-tp2/s3`. Avant de la lancer, déplacez votre `ContratNullTest.java` hors du dossier : `javac *.java` compilerait les deux et `--scan-class-path` exécuterait les trois classes — le compte 3/3 attendu suppose le vôtre hors du dossier. Comparez la référence au vôtre : si le vôtre était rouge contre la sortie brute et devient vert contre la correction, il est bon.
 
 ```{bash}
 mkdir -p /tmp/ai-tp2/s3/out && cd /tmp/ai-tp2/s3
@@ -318,13 +318,13 @@ public class Reservation {
     }
 }
 EOF
-cat > ContratNullRef.java <<'EOF'
+cat > ContratNullRefTest.java <<'EOF'
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 // Test de reference : met le contrat "jamais de nom null" a l'epreuve.
-class ContratNullRef {
+class ContratNullRefTest {
 
     @Test
     void leConstructeurRejetteUnNomNull() {
