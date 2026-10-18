@@ -1,6 +1,6 @@
 ---
-title: "Annexe — JavaFX en pratique : de la dépendance au runtime"
-description: "Annexe quickstart du cours OOCOL : dépendances JPMS, MVC FXML et runtime jlink, démontrés sur le dépôt public sample-javafx-client."
+title: "Support de la paire IA — JavaFX en pratique : de la dépendance au runtime"
+description: "Support applicatif du cours OOCOL : dépendances JPMS, MVC FXML et runtime jlink, démontrés sur le dépôt public épinglé sample-javafx-client."
 jupyter: bash
 execute:
   echo: true
@@ -8,23 +8,42 @@ execute:
   timeout: 1800
 ---
 
-# Annexe — JavaFX en pratique : de la dépendance au runtime
+<!-- [FX-FM] Noyau bash et execute: hérités du source v2026 (90:1–9) ; le rendu
+     n'appelle jamais le toolkit JavaFX — prescription 19- §3.5.1. -->
 
-Cette annexe prolonge le cours en appliquant ses outils — Maven, le système de modules
-JPMS, la gestion de versions par étiquettes — à une véritable application graphique
-JavaFX. Le support est le dépôt public `ebpro/sample-javafx-client`, qui contient deux
-petites applications (`fxapp1`, `fxapp2`) et un profil de build `jlink`.
+# Support de la paire IA — JavaFX en pratique : de la dépendance au runtime
 
-## 1. Accroche et mode d'emploi
+<!-- [FX-0] Chapeau : le support est nommé, épinglé et versionné par provenance. -->
 
-Une interface graphique semble difficile à réutiliser en pédagogie automatisée : il faut
-un écran. En réalité, presque tout le cycle de vie d'une application JavaFX — récupérer,
-déclarer ses dépendances, compiler, construire un runtime complet — s'observe sans
-aucune interface graphique. Seule l'étape finale, l'affichage de la fenêtre, exige un
-poste de travail. Le tableau ci-dessous indique ce qui est exécuté ici et ce qui reste
-pour vous.
+Ce support prolonge le cours en appliquant ses outils — Maven, le système de
+modules JPMS, la gestion de versions par étiquettes — à une véritable
+application graphique JavaFX. Il a été conçu pour fonder la paire de leçons
+consacrées à l'assistance automatisée par IA, dont il matérialise les
+engagements de maintenabilité. Il est construit sur le dépôt public
+`ebpro/sample-javafx-client`, qui contient deux petites applications (`fxapp1`,
+`fxapp2`) et un profil de build `jlink`, et dont le README fixe la version des
+modules JavaFX à **25.0.2** (provenance : README du tag `v1.0.0` ; section 7).
+Statut à énoncer : JavaFX ne fait pas partie du JDK — ce sont des bibliothèques
+et des outils distincts, développés par le projet OpenJFX et livrés ici comme
+dépendances déclarées dans le POM
+([projet OpenJFX](https://openjdk.org/projects/openjfx/)).
 
-| Étape | Dans cette annexe (CI, sans écran) | Sur votre poste |
+## 1. Objet et mode d'emploi : ce que le rendu montre, ce que votre poste montre
+
+<!-- [FX-1] Contrat d'exécution du support ; D2 frontière CI/poste ; tableau = forme canonique de 19- §3.5. -->
+
+Une interface graphique paraît difficile à réutiliser dans un rendu automatisé :
+elle exige un écran. En réalité, presque tout le cycle de vie d'une application
+JavaFX — récupérer, déclarer ses dépendances, compiler, construire un runtime
+complet — s'observe sans aucune interface graphique. Le mécanisme en est simple :
+la compilation, la lecture des sources et le linkage `jlink` opèrent sur du
+bytecode et sur le graphe de modules ; ils n'initialisent pas le pipeline
+graphique. L'affichage n'intervient qu'à l'exécution de l'application, lorsque
+le toolkit se lie à un serveur graphique — étape que le conteneur de rendu ne
+peut pas franchir, et que ce support ne lui demande pas de franchir. Le tableau
+ci-dessous est le contrat d'exécution de tout ce qui suit.
+
+| Étape | Dans ce support (CI, sans écran) | Sur votre poste |
 |---|---|---|
 | Clonage du dépôt épinglé `v1.0.0` | oui | oui |
 | `./mvnw package` (compilation, jar de module) | oui | oui |
@@ -32,16 +51,18 @@ pour vous.
 | `./mvnw -q -P jlink package` (runtime sur mesure) | oui | oui |
 | Ouverture de la fenêtre (`javafx:run`, `myapp`) | **non** | oui |
 
-Aucune décision de conception n'est prise à l'aveugle : chaque commande présentée a été
+Rien n'est affirmé ici sans vérification : chaque commande présentée a été
 vérifiée dans le dépôt cloné, et tout chemin cité ici en est extrait.
 
-## 2. Récupérer l'application
+## 2. Récupérer un support épinglé
 
-Nous clonons la version **étiquetée** `v1.0.0`, et non la branche de développement :
-une annexe reproductible épingle ses supports, exactement comme le cours épingle ses
-outils — c'est la même thèse de maintenabilité appliquée à un dépôt d'exemples.
-Le dépôt est public ; le clone passe donc en HTTPS, avec une boucle défensive de trois
-tentatives contre les faux départs réseau.
+<!-- [FX-2] D1 épinglement par étiquette + D2 tag vs branche ; boucle défensive maintenue (19- §3.5.2) ; renvoi sec-10, Git non réenseigné. -->
+
+Nous clonons la version **étiquetée** `v1.0.0`, et non la branche de
+développement : un document reproductible épingle aussi ses supports, exactement comme
+le cours épingle ses outils — c'est la même thèse de maintenabilité appliquée à
+un dépôt d'exemples. Le dépôt est public ; le clone passe donc en HTTPS, avec
+une boucle défensive de trois tentatives contre les faux départs réseau.
 
 ```{bash}
 rm -rf /tmp/javafx-tp
@@ -54,10 +75,38 @@ done
 ls sample-javafx-client
 ```
 
-La racine contient notamment `pom.xml`, le wrapper `mvnw`, et `src/` : un projet Maven
-standard, avec un wrapper — vous n'avez donc pas besoin d'installer Maven pour la suite.
+La racine contient notamment `pom.xml`, le wrapper `mvnw`, et `src/` : un projet
+Maven standard, avec un wrapper — vous n'avez donc pas besoin d'installer Maven
+pour la suite.
+
+:::{.callout-note}
+## Définition — Épinglement par étiquette
+
+L'**épinglement** consiste à figer la base de travail d'un support sur une
+révision identifiée par une **étiquette** (`tag`) plutôt que sur une branche.
+Une étiquette désigne une révision immobile : elle ne bouge pas quand
+d'autres commits sont ajoutés, alors qu'une branche avance à chaque commit.
+Travailler sur l'étiquette `v1.0.0` garantit donc que la lecture, la compilation
+et le linkage de ce support portent sur le même contenu, aujourd'hui et l'an
+prochain.
+
+*Exemple* : la cellule exécutée ci-dessus clone `--branch v1.0.0 --depth 1` ;
+la sortie `ls` attendue est la racine de cette révision figée (`pom.xml`,
+`mvnw`, `src/`), non celle de la branche de développement.
+
+*Cas limite* : si aucune étiquette n'existe, le support retombe sur une branche
+— et devient mobile : deux rendus à deux dates peuvent construire deux contenus
+différents sans qu'aucune erreur ne le signale. L'absence d'étiquette est un
+défaut du support, pas une option du mode d'emploi.
+
+*Source* : page de manuel `gitglossary(7)`, entrée « tag object » ; la
+mécanique des étiquettes est enseignée dans la séquence Git du cours (sec-10),
+non réouverte ici.
+:::
 
 ## 3. Construire sans écran
+
+<!-- [FX-3] Cycle de vie headless exécuté (19- §3.5.2) ; D2 jar de module vs jar autonome + double identification tag/SNAPSHOT ; M1 : release 21 = fait du dépôt épinglé. -->
 
 Passez en revue l'arborescence des sources avant de compiler :
 
@@ -66,22 +115,31 @@ cd /tmp/javafx-tp/sample-javafx-client
 find src -type f | sort
 ```
 
-Deux applications cohabitent dans un seul module : `fxapp1` (quatre fichiers : une
-classe `App`, un contrôleur, un FXML, une feuille CSS) et `fxapp2` (sept fichiers : cinq classes
-Java réparties en paquetages `view` et `model`, plus le FXML et la feuille CSS). Lançons la construction :
+Deux applications cohabitent dans un seul module : `fxapp1` (quatre fichiers :
+une classe `App`, un contrôleur, un FXML, une feuille CSS) et `fxapp2` (sept
+fichiers : cinq classes Java réparties en paquetages `view` et `model`, plus le
+FXML et la feuille CSS). Lançons la construction :
 
 ```{bash}
 cd /tmp/javafx-tp/sample-javafx-client
 ./mvnw -q package
 ```
 
-La première exécution télécharge les dépendances : le wrapper Maven lui-même, puis les
-artefacts JavaFX et les bibliothèques tierces déclarées dans le POM. Cette phase peut durer plusieurs
-minutes ; les exécutions suivantes sont quasi instantanées grâce au cache local.
-
-Inspectons le résultat. Le POM redirige le jar d'application vers `target/modules`
-(`maven-jar-plugin`, élément `outputDirectory`) — le jar est traité comme un *module*
-destiné à `jlink`, non comme un exécutable autonome :
+La première exécution télécharge les dépendances : le wrapper Maven lui-même,
+puis les artefacts JavaFX et les bibliothèques tierces déclarées dans le POM.
+Cette phase peut durer plusieurs minutes ; les exécutions suivantes sont quasi
+instantanées grâce au cache local. Deux faits de construction méritent d'être
+notés avant toute interprétation. D'une part, le POM du tag compile avec la
+cible `release` 21 : c'est une propriété du dépôt épinglé (POM du tag `v1.0.0`),
+pas une consigne du cours, et rien ici ne demande à la corriger. D'autre part,
+le POM redirige le jar d'application vers `target/modules`
+(`maven-jar-plugin`, élément `outputDirectory`) — le jar est traité comme un
+*module* destiné à `jlink`, non comme un exécutable autonome : un jar autonome
+porte un manifeste qui nomme une classe principale et s'exécute par `java -jar`,
+tandis qu'ici le jar est une unité de linkage que `jlink` intègre dans une
+image ; la raison de cette destination — l'alimentation de `jlink` — est
+démontrée à la section 6. Inspectons le
+résultat :
 
 ```{bash}
 cd /tmp/javafx-tp/sample-javafx-client
@@ -89,11 +147,15 @@ ls target/
 ls target/modules/
 ```
 
-Notez le décalage : l'étiquette Git `v1.0.0` épingle le *code source*, tandis que le POM
-porte encore sa version de développement `0.1.0-SNAPSHOT` — les deux mécanismes
-d'identification sont complémentaires, pas redondants.
+La sortie attendue montre `target/modules` peuplé du jar produit. Notez enfin le
+décalage d'identification : l'étiquette Git `v1.0.0` épingle le *code source*,
+tandis que le POM porte encore sa version de développement `0.1.0-SNAPSHOT` —
+les deux mécanismes sont complémentaires, pas redondants : l'un fixe une
+révision du dépôt, l'autre nomme l'artefact que Maven publie.
 
-## 4. JPMS : la réutilisation commence par une déclaration
+## 4. JPMS : déclarer pour réutiliser
+
+<!-- [FX-4] D1 module JPMS (requires/exports/opens) ; D2 liaison FXML-réflexion en forme énoncée (19- §3.5.4) ; D2 cycle de vie (javadoc Application) ; aphorisme 90:118 reformulé (R4/R5). -->
 
 Le fichier qui distingue ce projet d'un simple dépôt de classes est en tête des
 sources. Lisons-le intégralement :
@@ -103,39 +165,84 @@ cd /tmp/javafx-tp/sample-javafx-client
 cat src/main/java/module-info.java
 ```
 
-Ce fichier fait trois choses distinctes. Il **déclare** les dépendances requises
-(`requires javafx.controls;`, `requires javafx.fxml;`, `requires lombok;`…). Il
-**exporte** les paquetages que d'autres modules ont le droit d'utiliser (`exports …`).
-Et il **ouvre** des paquetages à la réflexion de JavaFX (`opens … to javafx.fxml;`),
-car le chargeur FXML instancie les contrôleurs par réflexion — sans cette ligne, le
-FXML refuserait de se lier au contrôleur, et l'application refuserait de démarrer.
+:::{.callout-note}
+## Définition — Module JPMS et ses trois verbes
 
-Relisez la sortie : un `requires java.sql;` y figure, alors que l'application ne touche
-aucune base de données — reliquat d'un état antérieur du dépôt. Repérer ces dépendances
-devenues inutiles fait partie de la maintenance des dépendances explicites : c'est
-exactement le genre de dette que JPMS rend visible, donc attaquable.
+Un **module** est une unité de composition et d'encapsulation du système de
+modules Java (JPMS) : un paquetage de paquetages, plus un descripteur
+`module-info.java` qui déclare ses relations aux autres modules. Le descripteur
+s'analyse en trois verbes distincts :
 
-La réutilisation commence par une déclaration : sans `requires javafx.controls;`, la dépendance n'existe pas pour la machine — maintenir un système, c'est d'abord rendre ses dépendances explicites.
+- **`requires`** — dépendance : le module courant a besoin des API du module
+  nommé ; sans cette ligne, le compilateur et la machine virtuelle considèrent
+  que la dépendance n'existe pas.
+- **`exports`** — offre : le paquetage nommé est accessible aux *autres* modules ;
+  sans elle, ses types publics restent internes au module.
+- **`opens`** — ouverture à la réflexion : le paquetage nommé est rendu
+  profondément accessible à un module donné (ici `to javafx.fxml`), sans quoi la
+  réflexion d'un autre module sur ses types est refusée.
 
-Comparez avec le POM : Maven y résout des *artefacts* (coordonnées, version, jar) ;
-`module-info.java` déclare des *capacités* (telle bibliothèque est nécessaire, tel
-paquetage est offert). Les deux documents se recoupent ici, mais ils répondent à deux
-questions différentes — « comment obtenir la bibliothèque ? » contre « qui dépend de
-quoi, à l'exécution ? ».
+*Exemple* : la sortie exécutée ci-dessus applique les trois verbes —
+`requires javafx.controls;`, `requires javafx.fxml;`, `requires lombok;`
+(dépendances) ; `exports …` (paquetages offerts) ; `opens … to javafx.fxml;`
+(ouverture au chargeur FXML).
+
+*Cas limite* : une déclaration peut survivre à son usage. La sortie exécutée
+montre un `requires java.sql;` alors que l'application ne touche aucune base de
+données — reliquat d'un état antérieur du dépôt. Ce n'est pas une erreur
+d'exécution : c'est une dette rendue **visible** par JPMS, donc attaquable —
+repérer ces dépendances devenues inutiles fait partie de la maintenance des
+dépendances explicites.
+
+*Source* : documentation Java SE du paquetage `java.lang.module` (classe
+`ModuleDescriptor`, modélisation de `module-info.java`). Déjà vu en sec-11
+sous l'angle des dépendances ; les trois verbes (`requires`/`exports`/`opens`)
+sont posés intégralement ici parce que la liaison FXML en dépend.
+:::
+
+Il en résulte une propriété vérifiable ligne à ligne sur la sortie lue
+ci-dessus : la maintenance des dépendances commence par la mise en
+correspondance des déclarations du descripteur avec les usages réels du code.
+
+Comparez le descripteur avec le POM : Maven y résout des *artefacts*
+(coordonnées, version, jar) ; `module-info.java` déclare des *capacités* (telle
+bibliothèque est nécessaire, tel paquetage est offert). Les deux documents se
+recoupent ici, mais ils répondent à deux questions différentes — « comment
+obtenir la bibliothèque ? » contre « qui dépend de quoi, à l'exécution ? ».
+
+Deux liaisons méritent un développement, parce qu'elles engagent le
+comportement du système.
+
+**La liaison FXML–réflexion.** Le chargeur FXML instancie les contrôleurs par
+réflexion. C'est précisément ce que la ligne `opens … to javafx.fxml;` rend
+possible. Sans elle, le refus est attendu à l'exécution du chargement : le
+chargeur lève une exception (`javafx.fxml.LoadException`, dont la cause est le
+refus d'accès réflexif du système de modules) et l'application ne démarre pas.
+Ce cas limite ne peut pas être exécuté dans le rendu — le chargement FXML
+appartient à l'étape d'affichage, exclue par le tableau de la section 1 — ; il
+est énoncé ici avec sa source, la spécification d'encapsulation du JPMS (paquetage
+`java.lang.module`, ouverture réflexive conditionnelle).
+
+**Le cycle de vie de l'application.** `App.java` de `fxapp1` montre le cycle de
+vie JavaFX : `main` appelle `launch`, qui rappelle `init`, puis `start`
+(chargement du FXML, création de la `Scene`, affichage du `Stage`), puis `stop`
+à la fermeture. Cet ordre est celui défini par la javadoc de
+`javafx.application.Application`
+([javadoc de la classe `Application`](https://openjfx.io/javadoc/25/javafx.graphics/javafx/application/Application.html)) ;
+il n'est pas observé dans le rendu, qui s'arrête à la construction.
 
 ### fxapp1, l'application minimale
 
-`fxapp1` tient en quatre fichiers, ceux du listing `find` de la section 3 sous le paquetage `fxapp1`.
-
-`App.java` montre le cycle de vie JavaFX : `main` appelle `launch`, qui rappelle
-`init`, puis `start` (chargement du FXML, création de la `Scene`, affichage du
-`Stage`), puis `stop` à la fermeture. `Controller.java` illustre la liaison
-déclarative : des champs annotés `@FXML` (`taskInputField`, `taskListView`,
-`addButton`…) sont peuplés par le runtime, et la méthode `initialize()` les équipe de
-gestionnaires d'événements. Une liste de tâches, un champ de saisie, deux boutons —
-assez pour voir chaque rôle, pas assez pour masquer le mécanisme.
+`fxapp1` tient en quatre fichiers, ceux du listing `find` de la section 3 sous
+le paquetage `fxapp1`. `Controller.java` illustre la liaison déclarative : des
+champs annotés `@FXML` (dont `taskInputField`, `taskListView` et `addButton`)
+sont peuplés par le runtime, et la méthode `initialize()` les équipe de gestionnaires
+d'événements. Une liste de tâches, un champ de saisie, deux boutons — assez
+pour discerner chaque rôle, pas assez pour masquer le mécanisme.
 
 ## 5. MVC : fxapp2 sous la loupe
+
+<!-- [FX-5] D1 MVC (renvoi sec-05) ; points de couture par grep exécuté (D2 ✓) ; javafaker mention neutre (M2) ; paragraphe Lombok condensé (O1) ; aphorisme 90:166 reformulé (R4/R5). -->
 
 `fxapp2` applique la même trame, mais en séparant les rôles en paquetages.
 Visualisons la structure :
@@ -146,9 +253,32 @@ ls src/main/java/fr/univtln/bruno/samples/jfx/fxapp2 src/main/java/fr/univtln/br
 ls src/main/resources/fr/univtln/bruno/samples/jfx/fxapp2
 ```
 
-Trois étages : `model/` (`Person`, `Page`, `PersonRepository` — un dépôt simulé en
-mémoire, peuplé par `javafaker`), `view/` (`Controller`), et les ressources (`fxapp02.fxml`,
-`styles.css`). Vérifions les trois points de couture entre les étages — la vue ne
+:::{.callout-note}
+## Définition — MVC (Modèle–Vue–Contrôleur)
+
+MVC est un patron d'architecture applicative qui répartit le code en trois rôles
+distincts : le **modèle** — les données et les règles qui les régissent,
+indépendantes de toute interface ; la **vue** — la présentation de l'état du
+modèle ; le **contrôleur** — la traduction des entrées de l'utilisateur en
+demandes au modèle. Le critère du patron est le sens des dépendances : la vue et
+le contrôleur connaissent le modèle ; le modèle n'est censé connaître ni l'une
+ni l'autre.
+
+*Exemple* : la sortie `ls` ci-dessus applique la répartition — `model/`
+(`Person`, `Page`, `PersonRepository`), `view/` (`Controller`), ressources
+(`fxapp02.fxml`, `styles.css`).
+
+*Cas limite* : la frontière se juge à un critère observable, non à l'intention.
+Une valeur de couleur ou un calcul de présentation qui remonterait dans le
+contrôleur dissout le patron sans aucun message d'erreur : c'est exactement ce
+que les recherches `grep` de la section ci-dessous permettent de contrôler.
+
+*Source* : Martin Fowler, *Patterns of Enterprise Application Architecture*,
+2002, chapitre « Presentation Domain » (exposé moderne du patron) ; définition
+générale traitée en sec-05, non réouverte ici.
+:::
+
+Trois étages, donc. Vérifions les trois points de couture entre eux — la vue ne
 connaît le modèle que par ces liaisons :
 
 ```{bash}
@@ -158,37 +288,78 @@ grep -n "PersonRepository\|@FXML" src/main/java/fr/univtln/bruno/samples/jfx/fxa
 head -16 src/main/resources/fr/univtln/bruno/samples/jfx/fxapp2/styles.css
 ```
 
-Le FXML désigne son contrôleur par `fx:controller=…view.Controller` et sa charte
-graphique par `stylesheets="@styles.css"` ; la feuille CSS ne parle qu'en classes de
-style (`header`, `toolbar`, `search-button`). Le contrôleur, lui, consomme le modèle
-(`PersonRepository.newInstance()`) et ne contient **aucune** couleur ni **aucun** pixel.
+Les sorties exécutées établissent la liaison dans les deux sens : le FXML
+désigne son contrôleur par `fx:controller=…view.Controller` et sa charte
+graphique par `stylesheets="@styles.css"` ; le contrôleur consomme le modèle
+(`PersonRepository.newInstance()`) sur les champs annotés `@FXML` que le `grep`
+montre. Le mécanisme de cette désignation n'est pas nouveau : c'est la
+réflexion ouverte en section 4 (`opens … to javafx.fxml;`) — le chargeur FXML
+instancie le contrôleur nommé par l'attribut, sans que la vue importe sa classe.
+La feuille CSS, elle, ne parle qu'en classes de style (`header`, `toolbar`,
+`search-button`).
 
-Le contrôleur ne dessine pas, la vue ne calcule pas : changer une charte graphique ne doit toucher aucune ligne de Java.
+Il en résulte une séparation contrôlable par les sorties ci-dessus : le
+contrôleur ne contient aucune valeur graphique (le `grep` ne montre que des
+références au modèle et des annotations `@FXML`), et le FXML ne contient aucun
+calcul (il ne déclare que des composants et des classes de style). Par
+conséquent, une modification de charte graphique peut se limiter au fichier CSS
+sans toucher aux sources Java ; le contrôle en est la recherche des valeurs de
+couleur dans les paquetages Java, qui ne doit rien retourner.
 
-Lisez le modèle pour clore le tour — une entité minimaliste, identifiée par son `UUID` :
+Lisez le modèle pour clore le tour — une entité minimaliste, identifiée par son
+`UUID` :
 
 ```{bash}
 cd /tmp/javafx-tp/sample-javafx-client
 cat src/main/java/fr/univtln/bruno/samples/jfx/fxapp2/model/Person.java
 ```
 
-Remarquez la densité : dix-sept lignes, et le comportement d'égalité, l'accèsseur et la
-fabrique `of` proviennent des annotations Lombok — un avant-goût du prix de la
-déclaration contre l'écriture à la main.
+La sortie attendue montre dix-sept lignes : une partie des membres de `Person`
+(comportement d'égalité, accèsseurs, fabrique `of`) est générée par Lombok.
+C'est une observation du code déposé, non un outil enseigné dans ce cours. Le
+dépôt simulé `PersonRepository` est de même peuplé par la bibliothèque
+`javafaker` — fait du tag `v1.0.0`, sans incidence sur les notions de cette
+section.
 
 ## 6. Un runtime qui se build : le profil jlink
 
-Dernier étage, et le plus parlant pour la maintenabilité : le POM définit un profil
-nommé `jlink` (plugin `jigsaw-maven-plugin`) qui assemble, à la phase `package`, un
-runtime Java taillé pour la seule application. Lançons-le :
+<!-- [FX-6] Exécution headless autorisée ; D1 image de runtime (cas limite : launcher scellé, rattaché ici) ; aphorisme 90:204 reformulé (R4/R5). -->
+
+Dernier étage, et le plus directement vérifiable pour la maintenabilité : le POM définit un
+profil nommé `jlink` (plugin `jigsaw-maven-plugin`) qui assemble, à la phase
+`package`, un runtime Java taillé pour la seule application. Lançons-le :
 
 ```{bash}
 cd /tmp/javafx-tp/sample-javafx-client
 ./mvnw -q -P jlink package
 ```
 
-Vérifions que l'image de runtime a bien été produite, avec son lanceur dédié
-(`myapp`, défini dans le POM par `<launcher>myapp=…</launcher>`) :
+:::{.callout-note}
+## Définition — Image de runtime (`jlink`)
+
+Une **image de runtime** est un répertoire produit par l'outil `jlink` du JDK :
+une machine virtuelle complète limitée à un ensemble choisi de modules, plutôt
+que le JDK entier installé sur la machine. L'ensemble est calculé par
+**résolution du graphe de modules** : à partir des modules racines indiqués,
+`jlink` inclut leur fermeture transitive de dépendances — ici le graphe de
+`module-info.java`, qui entraîne les modules JavaFX requis.
+
+*Exemple* : la vérification exécutée ci-dessous, `test -x
+target/image/bin/myapp`, confirme que l'image et son lanceur dédié (`myapp`,
+défini dans le POM par `<launcher>myapp=…</launcher>`) ont été produits ;
+`ls target/image/bin` en montre le contenu.
+
+*Cas limite* : le lanceur est **scellé au build**. `myapp` embarque la classe
+principale connue de `jlink` au moment de l'assemblage ; après un changement de
+`mainClass` dans le POM, l'ancien `myapp` continue de lancer l'ancienne
+application. Il faut relancer `./mvnw -q -P jlink package` pour que le lanceur
+suive — le runtime sur mesure est un artefact, et un artefact se régénère.
+
+*Source* : spécification des outils Java SE, page `jlink`
+([Java SE Tool Specifications, `jlink`](https://docs.oracle.com/en/java/javase/25/docs/specs/man/jlink.html)).
+:::
+
+Vérifions que l'image de runtime a bien été produite, avec son lanceur dédié :
 
 ```{bash}
 cd /tmp/javafx-tp/sample-javafx-client
@@ -196,55 +367,83 @@ test -x target/image/bin/myapp && echo "image OK"
 ls target/image/bin
 ```
 
-Le résultat n'est pas un jar à confier à un `java` installé sur la machine : c'est un
-répertoire `target/image` contenant un JVM complet, limité aux modules réellement
-requis par le graphe de dépendances de `module-info.java`. Plus besoin de supposer que
-le poste cible possède le bon JDK — l'application transporte le sien.
+La sortie attendue est la ligne `image OK`, suivie du contenu de
+`target/image/bin` : l'application ne dépend plus d'un `java` installé sur le
+poste cible, elle transporte le sien. Devenu artefact de la phase `package`,
+rattaché à l'étiquette du dépôt, le runtime se vérifie sur le disque par la
+commande ci-dessus — ce qui distingue une propriété vérifiable d'une simple
+promesse.
 
-Le runtime devient un artefact de build, livré avec l'application : la reproduction d'un environnement n'est plus une promesse orale.
+## 7. Sur votre poste : ouvrir la fenêtre (bloc non exécuté par le rendu)
 
-## 7. Sur votre machine : ouvrir la fenêtre
+<!-- [FX-7] Bornes visibles du contrat FX-1 ; fences statiques + marqueur obligatoires (19- §3.5.3) ; versions citées depuis le source avec provenance ; critères R7/R10 fermés. -->
 
-⚠️ **À faire sur votre poste** — la CI de rendu n'a pas d'affichage, cette commande
-n'est pas exécutée ici.
+:::{.callout-warning}
+## À faire — sur votre poste uniquement
 
-Le README du dépôt fixe la condition : un JDK 23 ou plus récent (les modules JavaFX
-25.0.2 l'exigent ; le POM compile avec `release` 21). Deux chemins s'offrent à vous,
-selon que vous voulez *développer* ou *livrer* :
+Le README du dépôt fixe la condition : un JDK 23 ou plus récent (les modules
+JavaFX 25.0.2 l'exigent ; le POM compile avec `release` 21 — valeurs attribuées
+au README du tag `v1.0.0`, non des consignes du cours). La mise en place de ce
+JDK sur votre poste est détaillée dans le support d'environnement du cours
+(`90_prerequis_environnement`). Le rendu de ce support
+n'a pas d'affichage : les deux commandes ci-dessous ne sont pas exécutées ici.
+Deux chemins s'offrent à vous, selon que vous voulez *développer* ou *livrer*.
+
+Développement — Maven lance l'application avec le JDK de votre poste :
 
 ```bash
-# Développement : Maven lance l'application avec votre JDK (classe principale fxapp2.App)
+# Bloc non exécuté par le rendu.
 ./mvnw javafx:run
 ```
 
+Livraison — le runtime auto-suffisant construit à la section 6 :
+
 ```bash
-# Livraison : le runtime auto-suffisant construit à la section 6
+# Bloc non exécuté par le rendu.
 ./target/image/bin/myapp
 ```
 
-La première fenêtre affiche la liste de personnes paginée de `fxapp2` (le POM pointe
-`mainClass` vers `fr.univtln.bruno.samples.jfx.fxapp2.App`). Pour observer `fxapp1`,
-changez temporairement la propriété `<mainClass>` vers `…fxapp1.App` et relancez
-`./mvnw javafx:run` : c'est un exercice de lecture du POM, pas une modification à
-remonter.
+Critères de réussite (à observer sur votre écran) :
 
-Attention : le lanceur `myapp`, lui, a scellé la classe principale au moment du build ;
-après un changement de `mainClass`, il faut relancer `./mvnw -q -P jlink package` pour que
-`myapp` suive.
+1. La fenêtre ouverte est celle de `fxapp2` : liste de personnes paginée
+   visible — le POM pointe `mainClass` vers
+   `fr.univtln.bruno.samples.jfx.fxapp2.App`.
+2. Exercice de lecture du POM : changez temporairement la propriété
+   `<mainClass>` vers `…fxapp1.App` et relancez `./mvnw javafx:run` ; critère
+   atteint lorsque la fenêtre affiche la liste de tâches de `fxapp1` (section
+   4). Rétablissez ensuite le POM : ce changement est un exercice de lecture,
+   pas une modification à remonter.
+3. Si vous aviez construit `myapp` avant le changement, relancez
+   `./mvnw -q -P jlink package` : sans cela, `myapp` garde la classe principale
+   scellée au build précédent (cas limite de la section 6).
+:::
 
-## 8. Ce que l'annexe réutilise dans le cours
+## 8. Ce que ce support apporte à la suite
 
-Rien de neuf n'a été introduit ici ; tout l'appareillage vient des briques déjà vues.
-**Maven et les modules JPMS** sont ceux du cours : le POM, le wrapper, le profil de
-build et `module-info.java` en sont l'application littérale. Les **tests** que le dépôt
-pourrait porter relèvent des mêmes pratiques que celles du TP JDBC. Le **clonage épinglé
-par étiquette** est celui du guide Git. Ce que JavaFX ajoute n'est pas une technologie
-supplémentaire, mais un révélateur : une application graphique force les dépendances,
-les frontières et le runtime à devenir explicites, là où un programme en ligne de
-commande peut longtemps s'en dispenser.
+<!-- [FX-8] Pont qui fonde la mention « déjà vue » des leçons IA (arbitrage 2.2, Option A) ; trois thèses en énoncés vérifiables ; clôture feuilletonnesque 90:246–250 reformulée (R4/R5/R10) ; renvois sans redite. -->
 
-Les trois leçons de cette annexe se relisent d'ailleurs comme un seul argument : une
-dépendance qui n'est pas déclarée n'existe pas ; une frontière qui n'est pas tenue
-(modèle/vue/contrôleur) se dissout à la première retouche graphique ; un environnement
-qui n'est pas built est une promesse orale. C'est exactement la position du cours :
-maintenir un système, c'est rendre ses engagements explicites et vérifiables.
+Rien de nouveau n'a été introduit ici ; tout l'appareillage vient de briques
+déjà enseignées. **Maven et les modules JPMS** sont ceux du cours : le POM, le
+wrapper, le profil de build et `module-info.java` en sont l'application
+littérale (séquences Maven, sec-03, et JPMS, sec-11). Les **tests** que le dépôt
+pourrait porter relèvent des mêmes pratiques que celles du TP JDBC (sec-12). Le
+**clonage épinglé par étiquette** est celui du guide Git (sec-10). Ce que
+JavaFX ajoute n'est pas une technologie supplémentaire, mais un révélateur : une
+application graphique force les dépendances, les frontières et le runtime à
+devenir explicites, là où un programme en ligne de commande peut longtemps s'en
+dispenser.
+
+Ce support établit trois propositions, chacune reliée à son critère
+d'observation :
+
+1. Une dépendance non déclarée n'existe pas pour la machine : sans le
+   `requires` correspondant, la compilation est rejetée (section 4).
+2. Une frontière de rôles non tenue rend les modifications imprévisibles : les
+   `grep` de la section 5 montrent exactement où passe la liaison
+   modèle/vue/contrôleur, donc où une retouche graphique doit s'arrêter.
+3. Un environnement qui n'est pas construit reste invérifiable : le `test -x`
+   de la section 6 en donne la trace contraire sur le disque.
+
+Ces trois propositions convergent vers la position que les leçons sur l'assistance
+automatisée réutilisent : maintenir un système, c'est rendre ses engagements
+explicites et vérifiables.

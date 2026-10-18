@@ -66,6 +66,10 @@ jupyter: java
 
 <div id="sec-09"></div>
 
+## Annexe — JavaFX en pratique : de la dépendance au runtime
+
+<div id="sec-14"></div>
+
 ## L'assistant de génération de code est un contributeur étranger
 
 <div id="sec-15"></div>
@@ -73,10 +77,6 @@ jupyter: java
 ## Génération contrôlée — mini-TP : démasquer trois sorties d'assistant
 
 <div id="sec-16"></div>
-
-## Annexe — JavaFX en pratique : de la dépendance au runtime
-
-<div id="sec-14"></div>
 
 ## Prérequis
 

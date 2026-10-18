@@ -21,13 +21,11 @@ listing:
     fields:
       - "title"
       - "subtitle"
-      - "description"
       - "date"
       - "categories"
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
   # 2) Installation + compilation mechanics (TP; legacy 02_java_101_InstallationCompilation.qmd is
   # excluded from this listing — the file stays rendered, retuned as the 90_prerequis_environnement annex)
   - id: sec-02
@@ -41,13 +39,11 @@ listing:
     fields:
       - "title"
       - "subtitle"
-      - "description"
       - "date"
       - "categories"
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
   # 3) Git guide (standalone, course-agnostic; java-side stub 03 dropped by decision — the guide stays independent of this course)
   - id: sec-10
     contents:
@@ -61,13 +57,11 @@ listing:
     fields:
       - "title"
       - "subtitle"
-      - "description"
       - "date"
       - "categories"
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
   # 4) Maven
   - id: sec-03
     contents:
@@ -80,13 +74,11 @@ listing:
     fields:
       - "title"
       - "subtitle"
-      - "description"
       - "date"
       - "categories"
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
   # 5) Language bases
   - id: sec-04
     contents:
@@ -100,13 +92,11 @@ listing:
     fields:
       - "title"
       - "subtitle"
-      - "description"
       - "date"
       - "categories"
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
   # 6) Reuse + inheritance (new v2026 arc 05/06 + TP; legacy 05_java_101_L_Heritage.qmd is
   # excluded from this listing — the file stays in the ELO and wave B replaces it)
   - id: sec-05
@@ -122,13 +112,11 @@ listing:
     fields:
       - "title"
       - "subtitle"
-      - "description"
       - "date"
       - "categories"
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
   # 7) Collections
   - id: sec-06
     contents:
@@ -142,13 +130,11 @@ listing:
     fields:
       - "title"
       - "subtitle"
-      - "description"
       - "date"
       - "categories"
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
   # 8) JDBC (simple example right after the introductory lesson)
   - id: sec-12
     contents:
@@ -162,13 +148,11 @@ listing:
     fields:
       - "title"
       - "subtitle"
-      - "description"
       - "date"
       - "categories"
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
   # 9) Exceptions
   - id: sec-07
     contents:
@@ -181,13 +165,11 @@ listing:
     fields:
       - "title"
       - "subtitle"
-      - "description"
       - "date"
       - "categories"
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
   # 10) Revision TP
   - id: sec-13
     contents:
@@ -200,13 +182,11 @@ listing:
     fields:
       - "title"
       - "subtitle"
-      - "description"
       - "date"
       - "categories"
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
   # 11) Post-Java-8 (new history lesson, then the three existing lessons)
   - id: sec-11
     contents:
@@ -222,13 +202,11 @@ listing:
     fields:
       - "title"
       - "subtitle"
-      - "description"
       - "date"
       - "categories"
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
   # 12) IO
   - id: sec-08
     contents:
@@ -241,13 +219,11 @@ listing:
     fields:
       - "title"
       - "subtitle"
-      - "description"
       - "date"
       - "categories"
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
   # 13) Serialisation
   - id: sec-09
     contents:
@@ -260,51 +236,11 @@ listing:
     fields:
       - "title"
       - "subtitle"
-      - "description"
       - "date"
       - "categories"
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
-  # 15) module IA (lecon+TP, racine parent)
-  - id: sec-15
-    contents:
-      - 80_ai_L_generative_assistant.qmd
-    type: grid
-    sort: false
-    grid-columns: 3
-    grid-item-border: true
-    image-height: 250px
-    fields:
-      - "title"
-      - "subtitle"
-      - "description"
-      - "date"
-      - "categories"
-    categories: true
-    date-format: "DD MMMM YYYY"
-    template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
-  # 16) module IA (lecon+TP, racine parent)
-  - id: sec-16
-    contents:
-      - 81_ai_P_generation_controlee.qmd
-    type: grid
-    sort: false
-    grid-columns: 3
-    grid-item-border: true
-    image-height: 250px
-    fields:
-      - "title"
-      - "subtitle"
-      - "description"
-      - "date"
-      - "categories"
-    categories: true
-    date-format: "DD MMMM YYYY"
-    template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
   # 14) Annexe JavaFX (root-level, sample épinglé)
   - id: sec-14
     contents:
@@ -317,10 +253,42 @@ listing:
     fields:
       - "title"
       - "subtitle"
-      - "description"
       - "date"
       - "categories"
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-    max-description-length: 200
+  # 15) module IA (lecon+TP, racine parent)
+  - id: sec-15
+    contents:
+      - 80_ai_L_generative_assistant.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
+  # 16) module IA (lecon+TP, racine parent)
+  - id: sec-16
+    contents:
+      - 81_ai_P_generation_controlee.qmd
+    type: grid
+    sort: false
+    grid-columns: 3
+    grid-item-border: true
+    image-height: 250px
+    fields:
+      - "title"
+      - "subtitle"
+      - "date"
+      - "categories"
+    categories: true
+    date-format: "DD MMMM YYYY"
+    template: ./_quarto-utils/gallery.ejs
