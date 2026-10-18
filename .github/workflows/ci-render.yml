@@ -1,7 +1,7 @@
 name: CI Render
 on:
   push:
-    branches: [develop, feature/upgrade-2026]
+    branches: [develop, feature/upgrade-2026, feature/retone-2027]
     tags: ['v*']
   # v1.3.22: preview deploys + auto-cleanup
   delete:
