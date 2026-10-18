@@ -120,6 +120,7 @@ listing:
   # 7) Collections
   - id: sec-06
     contents:
+      - 06-notebook-java-collections/06a_java_L_genericite.qmd
       - 06-notebook-java-collections/07_java_L_collections.qmd
       - 06-notebook-java-collections/06_java_101_P_Collections.qmd
     type: grid
