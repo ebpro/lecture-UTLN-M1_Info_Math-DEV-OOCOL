@@ -77,3 +77,7 @@ jupyter: java
 ## Annexe — JavaFX en pratique : de la dépendance au runtime
 
 <div id="sec-14"></div>
+
+## Prérequis
+
+[Prérequis — séquence d'environnement](90_prerequis_environnement.qmd) — annexe auto-guidée, hors chemin noté : JDK sur machine personnelle, espace de travail, projet type, archive jar, installation de Git.

@@ -28,11 +28,11 @@ listing:
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
     max-description-length: 200
-  # 2) Installation + compilation mechanics (TP)
+  # 2) Installation + compilation mechanics (TP; legacy 02_java_101_InstallationCompilation.qmd is
+  # excluded from this listing — the file stays rendered, retuned as the 90_prerequis_environnement annex)
   - id: sec-02
     contents:
       - 02-notebook-java-install/02_java_P_mecanique.qmd
-      - 02-notebook-java-install/02_java_101_InstallationCompilation.qmd
     type: grid
     sort: false
     grid-columns: 3

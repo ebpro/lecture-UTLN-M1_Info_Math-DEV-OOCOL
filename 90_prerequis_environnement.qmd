@@ -1,0 +1,250 @@
+---
+title: "Prérequis — séquence d'environnement"
+description: "Environnement Java sur machine personnelle : JDK, espace de travail, structure de projet type, empaquetage jar, Git"
+categories:
+  - Java
+  - Lecture
+  - Exercices
+provide_notes: true
+provide_slides: false
+jupyter: java
+echo: true
+output: true
+execute:
+  enabled: false
+---
+
+**Prérequis auto-guidé, hors chemin noté.** Ce document prépare votre environnement Java sur machine personnelle ; le cours lui-même se déroule dans l'image du cours, qui ne demande aucune installation.
+
+<!-- [15-A-b] Hôte promis par les renvois de la galerie (02_java_P_mecanique) et de 01_git_L_Bases (l.26, 73) : « annexe de prérequis de la séquence d'environnement ». Matière : 02L v2026 (335 l) réadaptée ; la section javadoc de 02L (l.202–239) n'est pas reprise ici — thème redistribué en galerie (§7). -->
+
+Les leçons du cours renvoient ici pour tout ce qui concerne la machine. Parcourez ce document dans l'ordre ; la liste de contrôle finale vérifie que vous pouvez enchaîner sur les séances.
+
+## Systèmes d'exploitation cibles
+
+<!-- [I1, 02L:23] Énoncé conservé ; lien [M4] à vérifier par le gate. -->
+
+Les instructions qui suivent s'adressent aux systèmes de la famille Unix (Linux, macOS) et, sous Windows, au sous-système [WSL (Windows Subsystem for Linux)](https://learn.microsoft.com/fr-fr/windows/wsl/install), dont Microsoft documente l'installation. Le shell de référence est **bash** : il est présent dans l'image du cours ; sur votre machine, les sections qui suivent vous mettent dans un équivalent.
+
+## Installer le JDK
+
+### La voie classique : Temurin, `JAVA_HOME` et `PATH`
+
+Pour développer en Java, un JDK (kit de développement) suffit. Le cours recommande la distribution [Temurin](https://projects.eclipse.org/projects/adoptium.temurin), retenue pour ses conditions de licence — c'est aussi celle de l'image du cours, qui fournit le JDK 25.0.4 à la date d'octobre 2026. Téléchargez-le, décompressez-le dans le répertoire de votre choix, puis déclarez-le à votre shell :
+
+```bash
+export JAVA_HOME=/usr/local/jdk-25            # le chemin dépend de votre installation
+export PATH="$JAVA_HOME/bin:$PATH"
+```
+
+Ajoutez ces deux lignes à votre `.bashrc` (ou `.zshrc`) pour qu'elles s'appliquent à chaque ouverture de session. La consigne de version du cours est le **JDK 25 (LTS)** à la date de 2026-10 : une installation plus ancienne ne vous empêchera pas de suivre les séances, mais les observations de la leçon de mécanique (versions de bytecode, propriétés de la machine) sont calées sur l'image du cours.
+
+Vérifiez d'abord que les variables sont définies (dans une nouvelle session, ou après `source ~/.bashrc`) :
+
+```bash
+echo "JAVA_HOME = $JAVA_HOME"
+echo "PATH = $PATH"
+```
+
+puis que les commandes attendues répondent bien :
+
+```bash
+java --version
+javac --version
+```
+
+La sortie attendue annonce la version installée et sa distribution ; sur l'image du cours, `openjdk 25.0.4`, édité par Eclipse Adoptium (Temurin).
+
+:::{.callout-caution title="Consigne"}
+Installez sur votre machine un JDK conforme à la baseline du cours (25 à la date de 2026-10), par la voie classique ou par le gestionnaire de versions ci-dessous.
+:::
+
+### SDKMan : gérer plusieurs versions
+
+[sdkman.io](http://sdkman.io/) installe et versionne un JDK (et d'autres outils) sans que vous touchiez aux chemins système à la main :
+
+```bash
+curl -s "https://get.sdkman.io" | bash
+sdk install java                # la version courante de SDKMan, pas nécessairement la baseline du cours
+sdk list java | grep installed  # les versions présentes sur votre machine
+```
+
+`sdk list java` énumère les distributions et versions disponibles ; c'est dans cette liste que vous puisez l'identifiant d'une version précise, plutôt que de le recopier d'un document qui vieillit. Pour la baseline du cours, choisissez-y un identifiant `25.*` et installez-le par `sdk install java <identifiant>`.
+
+<!-- [I2/I3, M1] Bornes v2026 (« minimum 21 », « 23-tem », 02L:42–43, 72–74) alignées sur la baseline 25 prouvée par sonde ; aucun identifiant SDKMan non vérifié n'est cité. L'installation de Maven (02L:44) est retirée : frontière sec-03 (12- MAV-M4/M9). -->
+
+## Espace de travail et projet type
+
+### La structure
+
+Rassemblez vos projets sous un unique répertoire de travail — noté `$HOME/work` dans la suite ; adaptez-le à vos habitudes. Chaque projet y occupe un répertoire propre, organisé en cinq sous-répertoires standards : `src` pour les sources, `bin` pour le bytecode compilé, `doc` pour la documentation, `dist` pour les archives livrables et `lib` pour les dépendances externes. Le premier projet du cours, `java/TP1/premierprogramme`, se met en place ainsi :
+
+```bash
+# (re)met à zéro le projet, sans toucher au reste de l'espace de travail
+rm -rf "$HOME/work/java/TP1/premierprogramme"
+mkdir -p "$HOME/work/java/TP1/premierprogramme"/{src,bin,doc,dist,lib}
+```
+
+### La classe d'exemple
+
+Le fichier source de référence tient en une page ; vous l'écrirez directement dans votre arborescence, ligne `package` déjà en place — sans copie depuis un dépôt. Un paquetage est un groupement nommé de classes dont le nom se traduit en arborescence de répertoires sous `src` (JLS, chapitre 7 « Packages ») ; d'où la coïncidence obligatoire entre le chemin du fichier et sa ligne `package`.
+
+Les commandes ci-dessous utilisent `$LOGNAME`, la variable d'environnement qui porte votre login de session ; vérifiez que `echo "$LOGNAME"` affiche bien votre login, sinon affectez-le (`LOGNAME=<votre_login>`). Si votre institution n'est pas `univtln`, transposez aussi ce préfixe ; le gabarit est `fr.<domaine>.<login>.tp.tp1`.
+
+```bash
+PROJET="$HOME/work/java/TP1/premierprogramme"
+PAQUETAGE="fr/univtln/$LOGNAME/tp/tp1"        # version chemin du paquetage
+mkdir -p "$PROJET/src/$PAQUETAGE"
+cat > "$PROJET/src/$PAQUETAGE/HelloWorld.java" <<EOF
+package fr.univtln.${LOGNAME}.tp.tp1;
+
+/**
+ * A very simple class to say Hello
+ * @author Emmanuel Bruno
+ *
+ */
+public class HelloWorld {
+
+    /**
+     * A dummy constructor
+     */
+    public HelloWorld() { }
+
+    /**
+     * The entry point of the class
+     * @param args The first parameter is a firstname
+     */
+    public static void main(String[] args) {
+        if (args.length==1)
+            System.out.println("Bonjour "+args[0]);
+        else
+            System.out.println("Usage : PremierProgramme [prenom]");
+    }
+
+}
+EOF
+tree "$PROJET"                                 # à défaut de tree : ls -R "$PROJET"
+```
+
+La dernière commande affiche l'arborescence obtenue : les cinq répertoires standards, et `HelloWorld.java` au fond du chemin de votre paquetage. Si votre login contient des caractères interdits dans un identifiant Java (point, tiret), remplacez-les par des tirets bas avant d'affecter `LOGNAME`. Note de rejouabilité : `$PROJET` et `$PAQUETAGE` vivent le temps d'un shell ; si vous reprenez plus tard, recommencez par leurs affectations (cellule ci-dessus).
+
+:::{.callout-caution title="Consigne"}
+Reproducez cette structure manuellement — sans les commandes ci-dessus, dans l'éditeur ou le terminal de votre choix — et vérifiez que l'instruction `package` du fichier écrit porte bien votre login.
+:::
+
+### Compiler et exécuter
+
+Depuis le répertoire du projet, la compilation indique où chercher les sources (`-sourcepath`), où déposer le bytecode (`-d`) et quel fichier compiler :
+
+```bash
+cd "$HOME/work/java/TP1/premierprogramme"
+javac -sourcepath src -d bin "src/$PAQUETAGE/HelloWorld.java"
+```
+
+L'exécution charge la classe depuis `bin` via le classpath et appelle sa méthode `main` :
+
+```bash
+java -classpath bin "fr.univtln.${LOGNAME}.tp.tp1.HelloWorld" Pierre
+```
+
+Avec un prénom en argument, la sortie attendue est `Bonjour Pierre` ; sans argument, le programme affiche sa ligne d'usage. Pourquoi ces trois objets (source, bytecode, JVM) obéissent à ces commandes est précisément le sujet de la leçon de mécanique ; installez ici le geste.
+
+:::{.callout-caution title="Consigne"}
+Compilez et exécutez la classe `HelloWorld`, avec et sans argument.
+:::
+
+<!-- [I4/M5, 02L:76–200] Cellules shell embarquées (02L:115–124, 141–165) réécrites en bash direct ; chemin d'environnement codé en dur → $HOME/work ; purge recentrée sur le répertoire du projet. Le source est écrit par heredoc, `package` déjà porté par $LOGNAME — la copie depuis resources/ et le sed d'origine (02L:159, fr.univtln.bruno fantôme) sont devenus sans objet. -->
+
+## Empaqueter : l'archive jar
+
+### Créer et utiliser une archive
+
+`jar` regroupe un ensemble de classes compilées dans un fichier unique, une archive Java. Depuis le répertoire `bin`, on emballe le paquetage entier dans `dist` :
+
+```bash
+cd "$HOME/work/java/TP1/premierprogramme/bin"
+jar cvf ../dist/TP01EX01.jar fr
+```
+
+Une archive se consomme comme un répertoire de classes : elle s'ajoute au classpath, la classe à exécuter restant désignée par son nom complet :
+
+```bash
+cd "$HOME/work/java/TP1/premierprogramme"
+java -cp dist/TP01EX01.jar "fr.univtln.${LOGNAME}.tp.tp1.HelloWorld" Max
+```
+
+:::{.callout-caution title="Consigne"}
+Générez l'archive de votre projet et exécutez-la.
+:::
+
+### Rendre l'archive exécutable directement
+
+Toute archive porte des métadonnées dans l'entrée `META-INF/MANIFEST.MF` ; consultez-la sans dépaqueter (outil `unzip` ; installez-le si votre système ne le fournit pas) :
+
+```bash
+cd "$HOME/work/java/TP1/premierprogramme"
+unzip -q -c dist/TP01EX01.jar META-INF/MANIFEST.MF
+```
+
+Pour que `java -jar` sache quelle classe lancer, le manifeste doit la déclarer sur une ligne `Main-Class:`. Partez du manifeste déjà présent dans l'archive, retirez ses lignes vides et ajoutez la déclaration :
+
+```bash
+cd "$HOME/work/java/TP1/premierprogramme"
+unzip -q -c dist/TP01EX01.jar META-INF/MANIFEST.MF \
+  | sed '/^[[:space:]]*$/d' > monManifest.txt
+echo "Main-Class: fr.univtln.${LOGNAME}.tp.tp1.HelloWorld" >> monManifest.txt
+cat monManifest.txt
+```
+
+La sortie attendue montre les lignes d'origine du manifeste suivies de la ligne `Main-Class:` que vous venez d'ajouter — terminez toujours le fichier par un saut de ligne, ce que `echo` fait. Reconstruisez alors l'archive avec ce manifeste (le `m` de `cvfm`) :
+
+```bash
+cd "$HOME/work/java/TP1/premierprogramme/bin"
+jar cvfm ../dist/TP01EX01.jar ../monManifest.txt fr
+cd ..
+java -jar dist/TP01EX01.jar Pierre
+```
+
+La dernière commande ne demande plus ni classpath ni nom de classe : le manifeste les fournit. Oracle détaille la fabrication des manifestes dans sa [documentation sur les fichiers manifest](https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html).
+
+:::{.callout-caution title="Consigne"}
+Rendez l'archive de votre projet exécutable et lancez-la par `java -jar`.
+:::
+
+<!-- [I6, 02L:241–335] Geste manuel conservé (frontière 12- : le prérequis ne mentionne pas Maven). Cellules shell embarquées (02L:296–308) réécrites en bash direct ; chemin d'environnement codé en dur → $HOME/work ; login codé en dur → $LOGNAME. resources/monManifest EXCLU (tableau 4.1, candidat S2) : le manifeste est fabriqué en ligne, comme le faisait la cellule d'origine. URL Oracle sans version (02L:294) reprise telle quelle — [M4] à vérifier par le gate. -->
+
+## Les outils du cours : Git et bash
+
+Dans l'image du cours, Git et bash sont déjà présents : pour travailler dans le cours, vous n'avez rien à installer. Les séquences consacrées à Git partent de ce constat et travaillent le geste, pas l'installation.
+
+## Installer Git sur votre machine personnelle
+
+Si vous voulez sortir de l'image et versionner votre travail localement, l'installation est brève :
+
+- **Windows** : [Git for Windows](https://git-scm.com/downloads) fournit Git avec son terminal dédié (Git Bash) ; si vous avez suivi l'option WSL plus haut, Git s'y installe comme sous Linux.
+- **macOS** : `brew install git` si vous utilisez Homebrew ; macOS fournit d'office une version système, suffisante pour démarrer.
+- **Linux** : `sudo apt install git` sur les distributions de la famille Debian/Ubuntu, ou l'équivalent dans votre gestionnaire de paquets.
+- **IDE** : VS Code, IntelliJ et leurs similaires intègrent Git ; aucune installation supplémentaire n'est requise pour commencer.
+
+Quelle que soit la voie, vérifiez par `git --version`. Pour apprendre Git au-delà du geste d'installation, la référence du cours est le livre [Pro Git](https://git-scm.com/book), disponible gratuitement en ligne.
+
+<!-- [4.2, G1-2/G1-9] Deux sous-sections courtes ; seules les deux URL autorisées par le contrat sont citées (git-scm.com/book, git-scm.com/downloads) — [M4] à vérifier par le gate. Aucun contenu de cours Git repris ici. -->
+
+## Et pour les commentaires de documentation ?
+
+La compétence « écrire et produire une javadoc » est enseignée dans la section « Lire la javadoc (compétence transversale du cours) » de la leçon *TP — La mécanique Java, à la main* (`02-notebook-java-install/02_java_P_mecanique.qmd`) ; elle n'est pas traitée ici.
+
+<!-- [I5, 02L:202–239] Mention d'une seule ligne, renvoi vers §7 de la galerie (S1, pas de reprise de matière). -->
+
+## Liste de contrôle
+
+Vous avez terminé ce prérequis lorsque, sur votre machine :
+
+1. `java --version` et `javac --version` répondent avec un JDK de la baseline du cours (25 à la date de 2026-10), ou un JDK plus récent/ancien, conscient que les observations chiffrées seront décalées ;
+2. `git --version` répond ;
+3. le projet `premierprogramme` est compilé et exécuté depuis votre espace de travail, avec le paquetage qui porte votre login ;
+4. l'archive du projet s'exécute par `java -jar`, sans classpath ni nom de classe.
+
+Ces quatre points acquittés, vous pouvez aborder les séances du cours — en commençant par la leçon de mécanique, qui suppose exactement cet environnement.
+
+<!-- Clôture sobre (R10, énumération fermée) ; renvoi réciproque, symétrique de l'« annexe de prérequis de la séquence d'environnement » que 02_java_P_mecanique appelle. -->
