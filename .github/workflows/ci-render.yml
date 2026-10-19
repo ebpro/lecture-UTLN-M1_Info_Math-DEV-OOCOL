@@ -14,10 +14,12 @@ concurrency:
 
 jobs:
   render:
-    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.30
+    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.36
     secrets: inherit
     with:
-      utils-ref: v1.3.30
+      utils-ref: v1.3.36
+      site-transport: staging
+      hang-detection-minutes: 20
       deploy-static: ${{ github.event_name != 'pull_request' }}
       quarto-image: "ghcr.io/ebpro/jupyter-base:quarto-full-fix-chromium-ci-headless-render"
       profiles: "notes,slides"
