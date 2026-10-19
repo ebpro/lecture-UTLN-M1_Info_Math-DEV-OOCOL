@@ -14,14 +14,13 @@ concurrency:
 
 jobs:
   render:
-    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.24
+    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.36
     secrets: inherit
     with:
-      utils-ref: v1.3.24
+      utils-ref: v1.3.36
+      site-transport: staging
+      hang-detection-minutes: 20
       deploy-static: ${{ github.event_name != 'pull_request' }}
       quarto-image: "ghcr.io/ebpro/solen:quarto-full-build-20261010T172146Z"
       profiles: "notes,slides"
-      deploy-pages: true
-      deploy-cloudflare: true
-      cf-project-name: "lecture-utln-m1-info-math-dev-oocol"
       enable-docker: true
