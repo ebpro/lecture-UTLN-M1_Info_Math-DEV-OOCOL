@@ -171,23 +171,6 @@ listing:
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-  # 10) Revision TP
-  - id: sec-13
-    contents:
-      - 13-notebook-revision-java/10_java_P_revision.qmd
-    type: grid
-    sort: false
-    grid-columns: 3
-    grid-item-border: true
-    image-height: 250px
-    fields:
-      - "title"
-      - "subtitle"
-      - "date"
-      - "categories"
-    categories: true
-    date-format: "DD MMMM YYYY"
-    template: ./_quarto-utils/gallery.ejs
   # 11) Post-Java-8 (new history lesson, then the three existing lessons)
   - id: sec-11
     contents:
@@ -208,44 +191,13 @@ listing:
     categories: true
     date-format: "DD MMMM YYYY"
     template: ./_quarto-utils/gallery.ejs
-  # 12) IO
-  - id: sec-08
-    contents:
-      - 08-notebook-java-io/08_java_101_L_IO.qmd
-    type: grid
-    sort: false
-    grid-columns: 3
-    grid-item-border: true
-    image-height: 250px
-    fields:
-      - "title"
-      - "subtitle"
-      - "date"
-      - "categories"
-    categories: true
-    date-format: "DD MMMM YYYY"
-    template: ./_quarto-utils/gallery.ejs
-  # 13) Serialisation
-  - id: sec-09
-    contents:
-      - 09-notebook-java-serialisation/09_java_101_L_Serialisation.qmd
-    type: grid
-    sort: false
-    grid-columns: 3
-    grid-item-border: true
-    image-height: 250px
-    fields:
-      - "title"
-      - "subtitle"
-      - "date"
-      - "categories"
-    categories: true
-    date-format: "DD MMMM YYYY"
-    template: ./_quarto-utils/gallery.ejs
   # 14) Annexe JavaFX (root-level, sample épinglé)
   - id: sec-14
     contents:
+      - 08-notebook-java-io/08_java_101_L_IO.qmd
+      - 09-notebook-java-serialisation/09_java_101_L_Serialisation.qmd
       - 90_java_L_annexe_javafx.qmd
+      - 13-notebook-revision-java/10_java_P_revision.qmd
     type: grid
     sort: false
     grid-columns: 3
