@@ -17,7 +17,10 @@ jobs:
     uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.36
     secrets: inherit
     with:
-      utils-ref: v1.3.36
+      # Canary-only SHA pin: _quarto-utils develop f880276 (= v1.3.36 + v1.3.37/38
+      # content + ebpro/cartouche extension, PR #43). Revert to a fleet tag once the
+      # extension ships in one. Do NOT merge this line to develop while untagged.
+      utils-ref: f880276b623d4d0b0af04c50695bcde6b827785a
       site-transport: staging
       hang-detection-minutes: 20
       deploy-static: ${{ github.event_name != 'pull_request' }}

@@ -1,0 +1,30 @@
+# Cartouche canary (feature/retone-2027 only — do NOT merge this file to develop
+# before the ebpro/cartouche extension is on a tagged utils-ref).
+#
+# `extensions:` is listed here with BOTH entries because a directory-level
+# `_metadata.yml` key overrides the shared `_quarto.yml` key (REPLACE semantics,
+# Quarto precedence: front matter > _metadata.yml > profile > project _quarto.yml):
+# repeating `_extensions/grantmcdermott/clean` keeps the shared styling active.
+# The extension itself lives in _quarto-utils (PR #43) and resolves through the
+# repo's `_extensions` -> `_quarto-utils/_extensions` symlink at the pinned
+# `utils-ref` in .github/workflows/ci-render.yml.
+extensions:
+  - _extensions/grantmcdermott/clean
+  - _extensions/ebpro/cartouche
+
+# Values consumed by cartouche.lua (colophon + JSON-LD + revealjs footer/end-slide
+# + typst colophon). Static for the plumbing canary: regenerate with
+# scripts/cartouche-info.sh (CI-side generation is the endgame mechanism).
+cartouche-repo: "ebpro/lecture-UTLN-M1_Info_Math-DEV-OOCOL"
+cartouche-branch: "feature/retone-2027"
+cartouche-sha: "814386c"
+cartouche-sha-full: "814386ccc076eb85eff5fa3c102e7d74b2686101"
+cartouche-commit-date: "2026-10-19"
+cartouche-build-date: "2026-10-20T07:12Z"
+cartouche-license-spdx: "CC-BY-NC-SA-4.0"
+cartouche-license-url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+cartouche-spdx-url: "https://spdx.org/licenses/CC-BY-NC-SA-4.0.html"
+cartouche-author: "Emmanuel Bruno"
+cartouche-base-url: "https://bruno.univ-tln.fr/teaching-material/lecture-UTLN-M1_Info_Math-DEV-OOCOL"
+cartouche-github-url: "https://github.com/ebpro/lecture-UTLN-M1_Info_Math-DEV-OOCOL"
+cartouche-stable-tag: ""
