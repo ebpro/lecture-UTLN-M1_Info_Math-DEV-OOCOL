@@ -21,6 +21,6 @@ jobs:
       site-transport: staging
       hang-detection-minutes: 20
       deploy-static: ${{ github.event_name != 'pull_request' }}
-      quarto-image: "ghcr.io/ebpro/jupyter-base:quarto-full-fix-chromium-ci-headless-render"
+      quarto-image: "ghcr.io/ebpro/solen:quarto-full-68c5fb9"
       profiles: "notes,slides"
       enable-docker: true
