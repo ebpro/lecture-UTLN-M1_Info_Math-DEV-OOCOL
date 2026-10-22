@@ -14,6 +14,19 @@ jupyter: java
 ---
 
 
+::: {.callout-tip}
+## Fil rouge du cours
+
+Tout le cours s'exerce sur un projet Maven unique : le dépôt
+[ebpro/dev-oocol-fil-rouge](https://github.com/ebpro/dev-oocol-fil-rouge),
+monté dans cet espace de travail sous `dev-oocol-fil-rouge/`. On y trouve
+11 modules numérotés, de `20-domain-bases` (bases du langage) à
+`95-transit-app` (synthèse finale, couplée à `90-jdbc`) ; chaque section
+de ce cours signale le module qui l'accompagne. Compilation et tests :
+`./mvnw verify` (JDK 21) ; la CI GitHub et SonarQube du dépôt sont au vert.
+Progression détaillée : `dev-oocol-fil-rouge/docs/progression.md`.
+:::
+
 ## Les origines de Java et introduction
 
 <div id="sec-01"></div>
@@ -32,29 +45,61 @@ jupyter: java
 
 ## Java — bases du langage
 
+::: {.callout-note}
+Fil rouge : le module `20-domain-bases/` du dépôt fil-rouge s'exerce dans cette section.
+:::
+
 <div id="sec-04"></div>
 
 ## Java — réutilisation et héritage
+
+::: {.callout-note}
+Fil rouge : le module `30-heritage/` du dépôt fil-rouge s'exerce dans cette section.
+:::
 
 <div id="sec-05"></div>
 
 ## Java — collections
 
+::: {.callout-note}
+Fil rouge : le module `40-collections/` du dépôt fil-rouge s'exerce dans cette section.
+:::
+
 <div id="sec-06"></div>
 
 ## JDBC — accès aux bases de données
+
+::: {.callout-note}
+Fil rouge : les modules `90-jdbc/` et `95-transit-app/` (synthèse) du dépôt fil-rouge s'exercent dans cette section.
+:::
 
 <div id="sec-12"></div>
 
 ## Java — exceptions
 
+::: {.callout-note}
+Fil rouge : le module `50-exceptions/` du dépôt fil-rouge s'exerce dans cette section.
+:::
+
 <div id="sec-07"></div>
 
 ## Après Java 8 — histoire et évolutions du langage
 
+::: {.callout-note}
+Fil rouge : les modules `80-modern-java/` et `85-collection-pitfalls/` du dépôt fil-rouge s'exercent dans cette section.
+:::
+
 <div id="sec-11"></div>
 
 ## Annexe
+
+::: {.callout-note}
+Fil rouge : le module `60-io/` du dépôt fil-rouge s'exerce dans cette annexe.
+:::
+
+::: {.callout-note}
+Fil rouge : le module `70-serialisation/` du dépôt fil-rouge s'exerce dans cette annexe.
+:::
 
 <div id="sec-14"></div>
 

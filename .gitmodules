@@ -53,3 +53,7 @@
 	path = 13-notebook-revision-java
 	url = git@github.com:ebpro/notebook-revision-java.git
 	branch = develop
+[submodule "dev-oocol-fil-rouge"]
+	path = dev-oocol-fil-rouge
+	url = git@github.com:ebpro/dev-oocol-fil-rouge.git
+	branch = develop
