@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   render:
-    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.43
+    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.39
     secrets: inherit
     with:
       utils-ref: v1.3.43
