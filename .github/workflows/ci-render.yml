@@ -18,6 +18,7 @@ jobs:
     secrets: inherit
     with:
       utils-ref: v1.3.43
+      seo-directives: false
       site-transport: staging
       hang-detection-minutes: 20
       deploy-static: ${{ github.event_name != 'pull_request' }}
