@@ -30,7 +30,7 @@ jupyter: java
 
 <div id="sec-04"></div>
 
-## Java — Héritage
+## Java — Réutilisation et héritage
 
 <div id="sec-05"></div>
 
