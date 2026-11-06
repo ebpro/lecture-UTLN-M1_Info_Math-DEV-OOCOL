@@ -66,3 +66,24 @@ regles seules, aucun sha, tag, numero de run, taille d'octets ni date.
   (ADR-13).
 - Les commandes de re-deploiement et leur ordre sont dans `TEACHING-FLEET.md`,
   pas ici.
+
+## Registre ADR (autorite, restaure 2026-11-05)
+
+- ADR-01 : un owner formel unique par projet (regle, pas un constat).
+- ADR-02 : les launch-prompts sont du contexte de session, jamais de l'etat date.
+- ADR-03 : verification serveur avant tout claim (commit, push, tag, merge, ecriture, suppression).
+- ADR-04 : go-ahead humain explicite par poussee; les approvals blanket n'autorisent aucun push.
+- ADR-05 : gel flotte `v1.3.45`.
+- ADR-06 : owner unique pour `_quarto-utils`.
+- ADR-07 : timeouts bornes sur toute commande, fail-fast sur toute atteinte non verifiee.
+- ADR-08 : une preuve durable vit dans un lieu durable (commit), pas dans un fichier non suivi.
+- ADR-09 : eligibilite scrub - fence `{.bash}` + legende « Capture de l'atelier - commandes et sortie, non executees par le rendu : » + honnetete PAR DOCUMENT (verifier `execute:` / `eval:` du document avant toute formulation).
+- ADR-10 : un `404` ne veut pas dire absent (contents API vs git tree).
+- ADR-11 : bundle avant toute mutation git.
+- ADR-12 : zsh ne decoupe pas les mots.
+- ADR-13 : le journal `Teaching/AGENTS.md` est la source unique d'etat mutable; un fichier de doctrine par repo ne porte aucun fait date.
+- ADR-14 : un projet ne publie pas son propre verdict.
+
+## Invariant de verification des mounts
+
+Un mount = intersection entre les entrees de `.gitmodules` et les repertoines reels a la racine du repo. Le total des gitlinks renvoye par un `git ls-tree` recursif N'EST PAS un nombre de mounts. Ne jamais enoncer un nombre de mounts dans un fichier de doctrine : le mesurer a la demande.
