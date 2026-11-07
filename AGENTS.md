@@ -67,23 +67,71 @@ regles seules, aucun sha, tag, numero de run, taille d'octets ni date.
 - Les commandes de re-deploiement et leur ordre sont dans `TEACHING-FLEET.md`,
   pas ici.
 
-## Registre ADR (autorite, restaure 2026-11-05)
+<!-- ADR-REGISTRY:BEGIN source=Teaching/TEACHING-FLEET.md -->
+## Registre ADR
 
-- ADR-01 : un owner formel unique par projet (regle, pas un constat).
-- ADR-02 : les launch-prompts sont du contexte de session, jamais de l'etat date.
-- ADR-03 : verification serveur avant tout claim (commit, push, tag, merge, ecriture, suppression).
-- ADR-04 : go-ahead humain explicite par poussee; les approvals blanket n'autorisent aucun push.
-- ADR-05 : gel flotte `v1.3.45`.
-- ADR-06 : owner unique pour `_quarto-utils`.
-- ADR-07 : timeouts bornes sur toute commande, fail-fast sur toute atteinte non verifiee.
-- ADR-08 : une preuve durable vit dans un lieu durable (commit), pas dans un fichier non suivi.
-- ADR-09 : eligibilite scrub - fence `{.bash}` + legende « Capture de l'atelier - commandes et sortie, non executees par le rendu : » + honnetete PAR DOCUMENT (verifier `execute:` / `eval:` du document avant toute formulation).
-- ADR-10 : un `404` ne veut pas dire absent (contents API vs git tree).
-- ADR-11 : bundle avant toute mutation git.
-- ADR-12 : zsh ne decoupe pas les mots.
-- ADR-13 : le journal `Teaching/AGENTS.md` est la source unique d'etat mutable; un fichier de doctrine par repo ne porte aucun fait date.
-- ADR-14 : un projet ne publie pas son propre verdict.
+| ADR | Règle | Statut |
+|---|---|---|
+| ADR-01 | Un owner formel unique par projet. Une règle, pas un constat : tous les owners ne sont pas désignés. | actif |
+| ADR-02 | Une fiche de démarrage est du contexte de session, jamais un fait daté. | rescopé par ADR-18 : le lieu durable du contexte d'un projet est son propre `AGENTS.md` versionné ; la distribution par copie n'est plus la voie |
+| ADR-03 | Aucun énoncé d'état (commit, poussée, tag, fusion, écriture, suppression) sans relecture côté serveur ou côté dépôt. Une reconstitution qui n'exécute pas l'outil ne prouve rien. | actif |
+| ADR-04 | Go-ahead humain explicite, formulé pour cette ressource et cette action, par mutation. Une autorisation dont la charge change est périmée et s'obtient de nouveau. | actif |
+| ADR-05 | Le gel de la flotte est décidé et levé par l'humain. Sa valeur courante ne vit pas dans un fichier de doctrine : elle se lit côté serveur et au lieu d'état que nomme `TEACHING-FLEET.md`. | actif ; la valeur que ce registre portait en est retirée par ADR-18 |
+| ADR-06 | Un owner unique pour `_quarto-utils` ; les autres flux n'y touchent pas. | actif |
+| ADR-07 | Timeout borné sur toute commande, fail-fast sur toute atteinte non vérifiée. Une vérification perdue n'est jamais une vérification réussie. | actif |
+| ADR-08 | Une preuve durable a un lieu durable : un ref, un tag, un artefact versionné. Jamais un fichier temporaire, jamais un objet git non atteignable. | actif |
+| ADR-09 | Éligibilité scrub : fence `{.bash}`, légende « Capture de l'atelier - commandes et sortie, non exécutées par le rendu : », et honnêteté par document (vérifier `execute:` et `eval:` du document avant toute formulation). | actif |
+| ADR-10 | Un `404` ne veut pas dire absent : l'API de contenu et l'arbre git ne couvrent pas le même espace. | actif |
+| ADR-11 | Bundle du travail avant toute mutation git. | actif |
+| ADR-12 | zsh ne découpe pas les mots : tableaux, ou sortie délimitée et lue proprement. | actif |
+| ADR-13 | Le journal du corpus est la source unique de l'état **transverse** ; l'état d'un seul dépôt vit dans l'`AGENTS.md` de ce dépôt. | rescopé par ADR-17 |
+| ADR-14 | Un projet ne publie pas son propre verdict. | actif |
+| ADR-15 | *Aucun énoncé : cet identifiant n'a jamais été émis.* Il n'est pas remplacé, pour que les références à ADR-16 et ADR-17 restent vraies. | non émis |
+| ADR-16 | Une passe de transfert d'état n'est pas une mission de contenu : pas de leçon, pas de TP, pas de relance de CI, pas de changement d'épinglage. Un dépôt par rédacteur ; une reprise commence par une remesure fraîche. | actif |
+| ADR-17 | Un `AGENTS.md` de projet porte une zone mince sans fait daté, puis une unique section de registre de session. | modifié par ADR-18 : la borne ne se pose plus par position mais par classe de région, §11 |
+| ADR-18 | Trois classes de région, §11 : ce qui est gelé est l'information et ses ancres, pas la phrase ; la zone mince est éditoriale sous retrait nommé ; le plancher dur de la mutation est inchangé. | actif |
 
-## Invariant de verification des mounts
+## Invariant de vérification des montages
 
-Un mount = intersection entre les entrees de `.gitmodules` et les repertoines reels a la racine du repo. Le total des gitlinks renvoye par un `git ls-tree` recursif N'EST PAS un nombre de mounts. Ne jamais enoncer un nombre de mounts dans un fichier de doctrine : le mesurer a la demande.
+Un montage est l'intersection entre les entrées de `.gitmodules` et les répertoires réellement
+présents à la racine du dépôt. Le total des liens git renvoyés par un `git ls-tree` récursif **n'est
+pas** un nombre de montages. Ne jamais énoncer un nombre de montages dans un fichier de doctrine :
+le mesurer à la demande.
+<!-- ADR-REGISTRY:END -->
+
+## Registre de session (zone ledger, hors Validation 5)
+
+Fait date autorise ici uniquement ; la clause 5 de TEACHING-FLEET.md s'arrete a la ligne precedente.
+
+### Identite
+
+- Depot `ebpro/lecture-UTLN-M1_Info_Math-DEV-OOCOL`, branche de travail `develop`, consommateur du pipeline de rendu (`ci-render.yml`).
+- Classification (topics `area-*`, `status-*`) : la carte du projet `Teaching` (`label_repos.py`) et le serveur en font foi, pas ce fichier.
+- Les valeurs d'epinglage de flotte (version de workflow partage, tag d'image de rendu) ne vivent pas ici : `teaching-repos/TEACHING-FLEET.md` et le serveur.
+- Zone de registre **creee le 2026-11-07** par la vague d'extension ADR-18. Avant elle, ce fichier portait le bloc ADR fige herite de la vague de gel `2026-11-05 (late-2)` sans zone de ledger, et l'emetteur du registre le refusait (`rc=4`) : l'extension n'etait pas une emission, c'etait d'abord la creation de cette zone.
+
+### Etat mesure le 2026-11-07 (portes de la vague d'extension)
+
+- HEAD local `bc7dfce67493fbd57458c4013966b228d830e80a` ; tip de `refs/heads/develop` sur la distante `e3483491e027906f489d507e05ccbe98f08ed4c7` ; avancee de `2` commit. L'ancetre est verifie (`merge-base --is-ancestor` : code de sortie 0) : une poussee serait un fast-forward pur.
+- Commits locaux non pousses aux portes de la vague (travail d'une vague anterieure du corpus ; la vague d'extension ne pousse rien) :
+  - `bc7dfce docs(agents): restaure registre ADR + invariant de verification des mounts`
+  - `b577e0b docs(agents): consigner AGENTS.md (doctrine mince, etat courant)`
+- Le commit engageant le present registre s'ajoute a cette liste : la poussee publiera donc **3 commits**, les 2 ci-dessus et lui. Les valeurs de HEAD et d'avancee ci-dessus sont celles des portes, avant ce commit.
+- Arbre de travail (`git status --porcelain=v1`) : vide
+- Declaration du wrapper de rendu (mesuree dans `.github/workflows/ci-render.yml`, pas supposee) : push sur **toute** branche (plus les tags `v*`, plus la suppression de branche), et requetes limitees a `develop`. Porte du job de publication : `github.event_name != 'pull_request'`.
+- Poussee laterale : le rendu se declenche quand meme et la porte de publication ne l'exclut pas, donc elle publie une **preview ephemere** sous `previews/<branche>` (le wrapper le dit lui-meme : commentaire `preview deploys + auto-cleanup`, et `delete: branches: ['**']` menage le nettoyage). Poussee a `develop` : rendu, puis si vert, **republie le site du cours**. Autrement dit, ici, **aucune facon de poser ces commits sans declencher un rendu**.
+
+### Missions ouvertes
+
+- Mission « index DEV-OOCOL » des restes ouverts du journal de corpus.
+- La tip distante est portee par une autre session de contenu. Cette vague ne pousse rien, ne reecrit rien, et n'interprete aucun verdict de rendu.
+
+### Decisions humaines en attente
+
+- Poussee de `develop` : go-ahead humain **individuel** (ADR-04), qui doit nommer la consequence mesuree ci-dessus (le job `deploy-static` est conditionne par une porte d'evenement : un rendu vert sur `develop` **republie le site du cours**).
+- Relecture du contenu editorial de la table ADR par un second regard : la porte de derive prouve la forme, jamais le sens.
+
+### Pointeurs
+
+- `teaching-repos/TEACHING-FLEET.md` : regles de flotte, seule autorite sur les valeurs partagees.
+- `Teaching/AGENTS.md` : journal de corpus, etat transverse date, registres de decisions.
