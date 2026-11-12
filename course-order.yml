@@ -3,50 +3,76 @@
 # 12 sections in pedagogical order
 listing:
   - id: sec-01
-    contents: "01-notebook-java-introduction/*.qmd"
+    contents:
+      - "01-notebook-java-introduction/*.qmd"
+      - "!01-notebook-java-introduction/index.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-02
-    contents: "02-notebook-java-install/*.qmd"
+    contents:
+      - "02-notebook-java-install/*.qmd"
+      - "!02-notebook-java-install/index.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-03
-    contents: "03-notebook-java-maven/*.qmd"
+    contents:
+      - "03-notebook-java-maven/*.qmd"
+      - "!03-notebook-java-maven/index.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-04
-    contents: "04-notebook-java-bases/*.qmd"
+    contents:
+      - "04-notebook-java-bases/*.qmd"
+      - "!04-notebook-java-bases/index.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-05
-    contents: "05-notebook-java-heritage/*.qmd"
+    contents:
+      - "05-notebook-java-heritage/*.qmd"
+      - "!05-notebook-java-heritage/index.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-06
-    contents: "06-notebook-java-collections/*.qmd"
+    contents:
+      - "06-notebook-java-collections/*.qmd"
+      - "!06-notebook-java-collections/index.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-07
-    contents: "07-notebook-java-exceptions/*.qmd"
+    contents:
+      - "07-notebook-java-exceptions/*.qmd"
+      - "!07-notebook-java-exceptions/index.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-08
-    contents: "08-notebook-java-io/*.qmd"
+    contents:
+      - "08-notebook-java-io/*.qmd"
+      - "!08-notebook-java-io/index.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-09
-    contents: "09-notebook-java-serialisation/*.qmd"
+    contents:
+      - "09-notebook-java-serialisation/*.qmd"
+      - "!09-notebook-java-serialisation/index.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-10
-    contents: "10-notebook-git/*.qmd"
+    contents:
+      - "10-notebook-git/*.qmd"
+      - "!10-notebook-git/index.qmd"
+      - "!10-notebook-git/_*.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-11
-    contents: "11-notebook-java-after8/*.qmd"
+    contents:
+      - "11-notebook-java-after8/*.qmd"
+      - "!11-notebook-java-after8/index.qmd"
     sort: filename
     max-description-length: 200
   - id: sec-12
-    contents: "12-notebook-java-jdbc/*.qmd"
+    contents:
+      - "12-notebook-java-jdbc/*.qmd"
+      - "!12-notebook-java-jdbc/index.qmd"
+      - "!12-notebook-java-jdbc/_*.qmd"
     sort: filename
     max-description-length: 200
