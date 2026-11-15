@@ -1,7 +1,7 @@
 name: CI Render
 on:
   push:
-    branches: ['**']
+    branches: [develop]
     tags: ['v*']
   # v1.3.22: preview deploys + auto-cleanup
   delete:
@@ -14,10 +14,10 @@ concurrency:
 
 jobs:
   render:
-    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.45
+    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.47
     secrets: inherit
     with:
-      utils-ref: v1.3.45
+      utils-ref: v1.3.47
       seo-directives: false
       site-transport: staging
       hang-detection-minutes: 20
