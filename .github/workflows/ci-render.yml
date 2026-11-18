@@ -14,10 +14,10 @@ concurrency:
 
 jobs:
   render:
-    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.47
+    uses: ebpro/_quarto-utils/.github/workflows/render-quarto.yml@v1.3.48
     secrets: inherit
     with:
-      utils-ref: v1.3.47
+      utils-ref: v1.3.48
       seo-directives: false
       site-transport: staging
       hang-detection-minutes: 20
